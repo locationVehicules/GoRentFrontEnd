@@ -12,7 +12,10 @@ export class NavBar extends Component {
       behavior: "smooth",
     });
     return (
-      <nav className="container navbar navbar-expand-lg navbar-light pt-4 px-3">
+      <nav
+        className="container navbar navbar-expand-lg navbar-light pt-4 px-3 sticky-top"
+        style={{ background: "var(--body-color1)" }}
+      >
         <Link className="navbar-brand" id="public-logo" to={"/"}>
           GoRent
         </Link>

@@ -16,7 +16,7 @@ import ParkingAPIs from "../GetSetData/useAPIs/ParkingAPIs";
 export class SearchResultPage extends Component {
   constructor(props) {
     super(props);
-    document.body.style.background = "#f6f6feb4";
+    document.body.style.background = "var(--body-color1)";
   }
 
   render() {

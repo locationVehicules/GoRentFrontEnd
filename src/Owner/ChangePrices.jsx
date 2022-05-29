@@ -11,12 +11,16 @@ export const ChangePrices = () => {
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [display, setDisplay] = useState(false);
   const [data, setData] = useState(false);
+
   const displayChangePriceForm = () => {
     setData(false);
     getVehicleList();
     display ? setDisplay(false) : setDisplay(true);
   };
 
+  const setSelectedVehicleFromQR = (vehicle) => {
+    setSelectedVehicle(vehicle);
+  }
   useEffect(() => {
     getVehicleList();
   }, [data]);
@@ -56,7 +60,10 @@ export const ChangePrices = () => {
             borderRadius: "10px",
           }}
         >
-          <StatusQRscanner displayStatusFrom={displayChangePriceForm} />
+          <StatusQRscanner
+            displayChangePriceForm={displayChangePriceForm}
+            setSelectedVehicle={setSelectedVehicleFromQR}
+          />
           {display && (
             <ChangePriceForm
               displayChangePriceForm={displayChangePriceForm}
@@ -89,18 +96,31 @@ export const ChangePrices = () => {
                   className=" p-2"
                   src={`https://cdn.imagin.studio/getImage?customer=img&${v.photo
                     .replaceAll("%3D", "=")
-                    .replace("%26", "&")
-                    }&angle=23&width=2600&zoomType=fullscreen`}
+                    .replace(
+                      "%26",
+                      "&"
+                    )}&angle=23&width=2600&zoomType=fullscreen`}
                   alt={`${v.name}_photo`}
                 />
               </div>
               <ul
-                className="info list-unstyled d-flex flex-column"
+                className="info list-unstyled d-flex flex-column align-items-start"
                 style={{
                   maxHeight: "45%",
                   maxWidth: "100%",
                 }}
               >
+                <li>
+                  <i
+                    className="bi bi-123 px-1 py-0 fs-5"
+                    style={{
+                      color: "black",
+                      border: "1px solid black",
+                      borderRadius: "6px",
+                    }}
+                  ></i>
+                  <span className="px-1">{v.matricule} </span>
+                </li>
                 <li>
                   <img
                     style={{
@@ -130,15 +150,6 @@ export const ChangePrices = () => {
                   ></i>
                   <span>{`${v.priceH} for one hour`}</span>
                 </li>
-                <li>
-                  <i
-                    className="bi material-icons fs-5"
-                    style={{ color: "black" }}
-                  >
-                    airline_seat_recline_normal
-                  </i>
-                  <span>{`${v.nb_place} seats`} </span>
-                </li>
               </ul>
             </button>
           ))}
@@ -147,13 +158,22 @@ export const ChangePrices = () => {
   );
 };
 
-const StatusQRscanner = ({ displayStatusFrom }) => {
+const StatusQRscanner = ({ displayChangePriceForm, setSelectedVehicle }) => {
   const delay = 100;
   const [result, setResult] = useState();
+  const [vehicle, setVehicle] = useState();
 
   useEffect(() => {
-    result !== undefined && displayStatusFrom();
+    if (result !== undefined) {
+      getVehicle(result);
+      setSelectedVehicle(vehicle);
+      vehicle && displayChangePriceForm();
+    }
   }, [result]);
+
+  const getVehicle = async (res) => {
+    CarsAPIs.carDetail(parseInt(res)).then((data) => setVehicle(data));
+  };
 
   const handleError = (error) => {
     console.error(error);
@@ -181,7 +201,11 @@ const ChangePriceForm = ({ displayChangePriceForm, selectedVehicle }) => {
   const [priceH, setPriceH] = useState(selectedVehicle.priceH);
 
   const saveData = () => {
-    CarsAPIs.UpdateCarPriceate(selectedVehicle.id, parseInt(priceD), parseInt(priceH));
+    CarsAPIs.UpdateCarPriceate(
+      selectedVehicle.id,
+      parseInt(priceD),
+      parseInt(priceH)
+    );
     displayChangePriceForm();
   };
   return (
@@ -262,8 +286,10 @@ const ChangePriceForm = ({ displayChangePriceForm, selectedVehicle }) => {
                     className=" p-2"
                     src={`https://cdn.imagin.studio/getImage?customer=img&${selectedVehicle.photo
                       .replaceAll("%3D", "=")
-                      .replace("%26", "&")
-                      }&angle=23&width=2600&zoomType=fullscreen`}
+                      .replace(
+                        "%26",
+                        "&"
+                      )}&angle=23&width=2600&zoomType=fullscreen`}
                     alt={`${selectedVehicle.name}_photo`}
                   />
                 </div>

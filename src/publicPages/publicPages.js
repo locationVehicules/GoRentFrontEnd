@@ -13,7 +13,7 @@ import { ScrollTop } from "../components/ScrollTop";
 export class LandingPage extends Component {
   constructor(props) {
     super(props);
-    document.body.style.background = "#f6f6feb4";
+    document.body.style.background = "var(--body-color1)";
   }
   render() {
     window.scrollTo({

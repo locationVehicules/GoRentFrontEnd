@@ -402,7 +402,7 @@ export class SignUp extends Component {
 export class GetRenterInfos extends Component {
   constructor(props) {
     super(props);
-    document.body.style.background = "var(--btn_color1)";
+    document.body.style.background = "var(--btn_color)";
   }
   state = {
     gender: "",

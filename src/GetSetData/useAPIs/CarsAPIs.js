@@ -36,7 +36,6 @@ export default class CarsAPIs {
       .catch((err) => console.log(err));
   }
   static UpdateCarPriceate(id, priceDay, priceHour) {
-    console.log(JSON.stringify({ priceD: priceDay, priceH: priceHour }));
     return fetch(`http://127.0.0.1:8000/cars/UpdateCarPrice/${id}`, {
       method: "PUT",
       headers: {
@@ -44,7 +43,49 @@ export default class CarsAPIs {
       },
       body: JSON.stringify({ priceD: priceDay, priceH: priceHour }),
     })
-      .then((response) => console.log(response.json()))
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+  static UpdateCarParking(id, parkingID, spot_letter, spot_number) {
+    return fetch(`http://127.0.0.1:8000/cars/UpdateCarParking/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        parking: parkingID,
+        spotLetter: spot_letter,
+        spotNumber: spot_number,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+  static DeleteCar(id) {
+    return fetch(`http://127.0.0.1:8000/cars/DeleteCar/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        etat: "not available",
+      }),
+    })
+      .then((response) => response)
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+  static AddCar(data) {
+    return fetch(`http://127.0.0.1:8000/cars/AddCar/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response)
       .then((data) => data)
       .catch((err) => console.log(err));
   }

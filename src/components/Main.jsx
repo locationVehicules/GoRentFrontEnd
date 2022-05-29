@@ -21,9 +21,12 @@ export const Main = (props) => {
     <main
       role="main"
       id="main"
-      className={`d-flex flex-column ${mainSize} float-lg-end mt-5 mt-lg-0 p-3 p-lg-1 pt-lg-0`}
+      className={`d-flex flex-column ${mainSize} float-lg-end mt-5 mt-lg-0 p-3 p-lg-1 pt-lg-0 `}
     >
-      <div className="d-flex">
+      <div
+        className="d-flex sticky-top"
+        style={{ background: "var(--body-color1)" }}
+      >
         <nav className="navbar d-flex w-100">
           <button
             id="navbar-toggler-btn"
