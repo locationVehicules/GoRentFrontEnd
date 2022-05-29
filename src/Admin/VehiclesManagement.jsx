@@ -6,7 +6,6 @@ import Select from "react-select";
 import CarsAPIs from "../GetSetData/useAPIs/CarsAPIs";
 import ParkingAPIs from "../GetSetData/useAPIs/ParkingAPIs";
 import "../css/gerer_vehicules_style.css";
-import { SplitButton } from "react-bootstrap";
 
 export const VehiclesManagement = () => {
   const [vehicles, setVehicles] = useState(null);
