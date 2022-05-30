@@ -63,6 +63,20 @@ export default class CarsAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
+  static UpdateCarState(id, state) {
+    return fetch(`http://127.0.0.1:8000/cars/UpdateCarState/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        etat: state
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
   static DeleteCar(id) {
     return fetch(`http://127.0.0.1:8000/cars/DeleteCar/${id}`, {
       method: "PUT",

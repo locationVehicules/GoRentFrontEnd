@@ -2,15 +2,55 @@ import Select from "react-select";
 import React, { useState, useEffect } from "react";
 import QrReader from "react-qr-scanner";
 import CarsAPIs from "../GetSetData/useAPIs/CarsAPIs";
+import ProblemeAPIs from "../GetSetData/useAPIs/ProblemeAPIs";
 
-const StatusForm = ({ displayStatusFrom }) => {
-  const vehicleState = [
-    { value: "rented", label: "Rented" },
-    { value: "available", label: "Available" },
-    { value: "under", label: "Under" },
-    { value: "reserved", label: "Reserved" },
-    { value: "broken", label: "Broken" },
-  ];
+const StatusForm = ({ displayStatusFrom, selectedVehicle }) => {
+  const [problemes, setProblemes] = useState(null);
+  const [update, setUpdate] = useState(false);
+  const [SolovedProblem, setSolovedProblem] = useState([]);
+  const [nbProblem, setNbProblem] = useState(0);
+
+  const getproblemes = async (id) => {
+    await ProblemeAPIs.problemeList(id).then((data) => setProblemes(data));
+    setUpdate(true);
+  };
+
+  const setSoloved = (id) => {
+    let nb;
+    if (!SolovedProblem.includes(id)) {
+      let s = SolovedProblem;
+      s.push(id);
+      setSolovedProblem(s);
+      nb = nbProblem + 1;
+    } else {
+      setSolovedProblem(SolovedProblem.filter((p) => p !== id));
+      nb = nbProblem - 1;
+    }
+    setNbProblem(nb);
+  };
+  const save = () => {
+    let toDay = new Date();
+    toDay.setMinutes(toDay.getMinutes() - toDay.getTimezoneOffset());
+    toDay.setHours(toDay.getHours() + 1);
+    toDay = toDay.toISOString().slice(0, 10);
+    let Gid = 1;
+
+    SolovedProblem.map((p) => updateproblemes(p, toDay, true, Gid));
+    SolovedProblem.length === problemes.length && updateState();
+    setUpdate(false);
+    displayStatusFrom();
+  };
+
+  const updateproblemes = async (id, toDay, soloved, Gid) => {
+    await ProblemeAPIs.problemeUpdate(id, toDay, soloved, Gid);
+  };
+  const updateState = async () => {
+    await CarsAPIs.UpdateCarState(selectedVehicle.id, "available");
+  };
+  useEffect(() => {
+    getproblemes(selectedVehicle.id);
+  }, [update]);
+
   return (
     <div
       className="modal fade show d-block"
@@ -19,7 +59,7 @@ const StatusForm = ({ displayStatusFrom }) => {
       role="dialog"
     >
       <div
-        className="modal-dialog modal-dialog-centered  modal-lg"
+        className="modal-dialog modal-dialog-centered modal-md"
         role="dialog"
       >
         <div className="modal-content">
@@ -29,147 +69,175 @@ const StatusForm = ({ displayStatusFrom }) => {
             </h4>
           </div>
           <div className="modal-body">
-            <div className="vehicle-info d-flex flex-md-row flex-column m-2 p-3 border ">
-              <div className="w-100">
-                <div className="d-flex flex-md-row flex-column ">
-                  <div className="w-100 m-1 d-flex flex-column fs-5">
-                    <div className="m-1">
-                      <label
-                        htmlFor="renter-name"
-                        className="fs-5"
-                        style={{ color: "var(--font-color-2)" }}
-                      >
-                        Registration Number
-                      </label>
-                      <p
-                        className="form-control fs-5"
-                        id="renter-name"
-                        style={{
-                          border: 0,
-                          borderBottom: "2px solid var(--font-color-2)",
-                        }}
-                      >
-                        123456 124 25
-                      </p>
-                    </div>
-                    <div className="m-1">
-                      <label
-                        htmlFor="renter-name"
-                        className="fs-5"
-                        style={{ color: "var(--font-color-2)" }}
-                      >
-                        Model and Color
-                      </label>
-                      <p
-                        className="form-control fs-5"
-                        id="renter-name"
-                        style={{
-                          border: 0,
-                          borderBottom: "2px solid var(--font-color-2)",
-                        }}
-                      >
-                        Peugeot 3008 | white
-                      </p>
-                    </div>
-                    <div className="m-1">
-                      <label
-                        htmlFor="renter-name"
-                        className="fs-5"
-                        style={{ color: "var(--font-color-2)" }}
-                      >
-                        Type
-                      </label>
-                      <p
-                        className="form-control fs-5"
-                        id="renter-name"
-                        style={{
-                          border: 0,
-                          borderBottom: "2px solid var(--font-color-2)",
-                        }}
-                      >
-                        Family
-                      </p>
-                    </div>
-                  </div>
-                  <div className="w-100 m-1 d-flex flex-column fs-5 ">
-                    <label
-                      htmlFor="photo-permit"
-                      className="fs-5"
-                      style={{ color: "var(--font-color-2)" }}
-                    >
-                      Vehicle Photo
-                    </label>
-                    <div className="m-auto mt-1 w-100 h-100 border rounded">
-                      {" "}
-                      photo{" "}
-                    </div>
-                  </div>
-                </div>
-                <div className="m-1">
+            <div className="d-flex flex-md-row flex-column ">
+              <div className="w-100 m-1 d-flex flex-column fs-6">
+                <div>
                   <label
                     htmlFor="renter-name"
-                    className="fs-5"
+                    className="fs-6"
                     style={{ color: "var(--font-color-2)" }}
                   >
-                    Spot Number
+                    Registration Number
                   </label>
                   <p
-                    className="form-control fs-5"
+                    className="form-control fs-6"
                     id="renter-name"
                     style={{
                       border: 0,
                       borderBottom: "2px solid var(--font-color-2)",
                     }}
                   >
-                    0003
+                    {selectedVehicle.matricule}
                   </p>
                 </div>
-                <div className="m-1">
+                <div>
                   <label
                     htmlFor="renter-name"
-                    className="fs-5"
+                    className="fs-6"
                     style={{ color: "var(--font-color-2)" }}
                   >
-                    Problems
+                    Name and Color
                   </label>
-                  <p id="alert">Check the box if the problem is soloved</p>
-                  <ul className="list-unstyled">
-                    <li>
-                      <div className="input-group mb-3">
-                        <div className="d-flex justify-content-center input-group-text text-wrap">
-                          <input
-                            className="form-check-input mt-0"
-                            type="checkbox"
-                            value=""
-                          />
-                          <div>
-                            <span className="p-2 ">date</span>
-                            <span className="p-2 ">justification</span>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
+                  <p
+                    className="form-control fs-6"
+                    id="renter-name"
+                    style={{
+                      border: 0,
+                      borderBottom: "2px solid var(--font-color-2)",
+                    }}
+                  >
+                    {selectedVehicle.name} | {selectedVehicle.couleur}
+                  </p>
+                </div>
+                <div className="d-flex justify-content-center">
+                  <label
+                    htmlFor="renter-name"
+                    className="fs-6 m-2"
+                    style={{ color: "var(--font-color-2)" }}
+                  >
+                    Spot
+                  </label>
+                  <p
+                    className="form-control fs-6"
+                    id="renter-name"
+                    style={{
+                      border: 0,
+                      borderBottom: "2px solid var(--font-color-2)",
+                    }}
+                  >
+                    {selectedVehicle.spotLetter}-{selectedVehicle.spotNumber}
+                  </p>
+                </div>
+              </div>
+              <div className="w-100 m-1 d-flex flex-column fs-6 ">
+                <label
+                  htmlFor="photo-permit"
+                  className="fs-6"
+                  style={{ color: "var(--font-color-2)" }}
+                >
+                  Vehicle Photo
+                </label>
+                <div
+                  className="img-containe d-flex"
+                  style={{
+                    maxHeight: "100%",
+                    maxWidth: "100%",
+                  }}
+                >
+                  <img
+                    className=" p-2"
+                    src={`https://cdn.imagin.studio/getImage?customer=img&${selectedVehicle.photo
+                      .replaceAll("%3D", "=")
+                      .replace(
+                        "%26",
+                        "&"
+                      )}&angle=23&width=2600&zoomType=fullscreen`}
+                    alt={`${selectedVehicle.name}_photo`}
+                  />
                 </div>
               </div>
             </div>
-            <div className="d-flex m-2 p-3 ">
-              <label
-                htmlFor="state"
-                className="fs-5 mx-3"
-                style={{ color: "var(--font-color-2)" }}
-              >
-                State
-              </label>
-
-              <Select
-                className="vehicle-state w-100"
-                classNamePrefix="select"
-                defaultValue={vehicleState[0]}
-                name="vehicle-state"
-                options={vehicleState}
-              />
-            </div>
+            <p id="alert">Check the box if the problem is soloved</p>
+            {update &&
+              (!problemes.noProblem ? (
+                <>
+                  <div className="m-1">
+                    <table className="table table-borderless text-center text-nowrap">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>Date</th>
+                          <th>Type</th>
+                          <th>Problem</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {problemes.map((p) => (
+                          <tr>
+                            <td>
+                              <input
+                                className="form-check-input mt-0"
+                                type="checkbox"
+                                value={p.id}
+                                onClick={(v) => {
+                                  setSoloved(v.target.value);
+                                }}
+                              />
+                            </td>
+                            <td className="p-2 ">{p.post_date}</td>
+                            <td className="p-2 ">{p.type}</td>
+                            <td className="p-2 ">{p.probeleme}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="d-flex m-1 p-3 ">
+                    <label
+                      htmlFor="state"
+                      className="fs-5 mx-3"
+                      style={{ color: "var(--big-title-color)" }}
+                    >
+                      State
+                    </label>
+                    <p
+                      className="form-control fs-6"
+                      id="renter-name"
+                      style={{
+                        border: 0,
+                        borderBottom: "2px solid var(--font-color-2)",
+                      }}
+                    >
+                      {nbProblem === problemes.length ? "available" : "broken"}
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p className="d-flex justify-content-center fs-5">
+                    No problems with this vehicle
+                  </p>
+                  <div className="d-flex m-1 p-3 ">
+                    <label
+                      htmlFor="state"
+                      className="fs-5 mx-3"
+                      style={{ color: "var(--big-title-color)" }}
+                    >
+                      State
+                    </label>
+                    <p
+                      className="form-control fs-6"
+                      id="renter-name"
+                      style={{
+                        border: 0,
+                        borderBottom: "2px solid var(--font-color-2)",
+                      }}
+                    >
+                      {selectedVehicle.etat}
+                    </p>
+                  </div>
+                </>
+              ))}
 
             <div className="modal-footer">
               <button
@@ -184,7 +252,7 @@ const StatusForm = ({ displayStatusFrom }) => {
               <button
                 type="button"
                 className="btn"
-                onClick={displayStatusFrom}
+                onClick={() => save()}
                 style={{ background: "var(--btn_color1)", color: "white" }}
               >
                 Save changes
@@ -227,7 +295,7 @@ const StatusQRscanner = ({ displayStatusFrom }) => {
 };
 
 export const Status = () => {
-
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [display, setDisplay] = useState(false);
 
   const displayStatusFrom = () => {
@@ -239,7 +307,11 @@ export const Status = () => {
 
   const getVehicleList = async () => {
     await CarsAPIs.carsList().then((data) =>
-      setVehicles(data.filter((data) => data.etat !== "not available"))
+      setVehicles(
+        data.filter(
+          (data) => data.etat !== "not available" && data.etat !== "rented"
+        )
+      )
     );
     setData(true);
   };
@@ -249,6 +321,17 @@ export const Status = () => {
 
   return (
     <div>
+      <div id="search" className="d-flex m-1 mx-lg-2 px-3">
+        <form className="d-flex">
+          <i className="bi bi-search fs-5"></i>
+          <input
+            className="form-control form-control-sm ml-3 fs-6"
+            type="text"
+            placeholder="by registration number"
+            aria-label="Search"
+          />
+        </form>
+      </div>
       <div className="p-3 d-flex flex-wrap justify-content-center" id="filterd">
         <div
           className="card m-1 my-auto"
@@ -259,12 +342,20 @@ export const Status = () => {
           }}
         >
           <StatusQRscanner displayStatusFrom={displayStatusFrom} />
-          {display && <StatusForm displayStatusFrom={displayStatusFrom} />}
+          {display && (
+            <StatusForm
+              displayStatusFrom={displayStatusFrom}
+              selectedVehicle={selectedVehicle}
+            />
+          )}
         </div>
         {vehicles &&
           vehicles.map((v, i) => (
             <button
-              onClick={() => {}}
+              onClick={() => {
+                setSelectedVehicle(v);
+                displayStatusFrom();
+              }}
               key={i}
               style={{
                 width: "240px",
@@ -320,7 +411,10 @@ export const Status = () => {
                   {v.name}
                 </li>
                 <li>
-                  <i className="bi bi-slack fs-5" style={{ color: "black" }}></i>
+                  <i
+                    className="bi bi-slack fs-5"
+                    style={{ color: "black" }}
+                  ></i>
                   <span>{`${v.modele}`} </span>
                 </li>
                 <li>

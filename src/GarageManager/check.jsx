@@ -252,7 +252,7 @@ const Check = ({ displayCheckFrom }) => {
 export const CheckQRscanner = () => {
   const [delay, setDelay] = useState(100);
   const [result, setResult] = useState();
-  const [display, setDisplay] = useState(false);
+  const [display, setDisplay] = useState(true);
 
   useEffect(() => {
     result !== undefined && setDisplay(true);

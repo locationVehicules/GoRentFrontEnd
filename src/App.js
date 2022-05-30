@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import { Pay } from "./Pay/Pay";
-
 import { LandingPage } from "./publicPages/publicPages";
 import { Login, SignUp, GetRenterInfos } from "./publicPages/LogPages";
 import { SearchResultPage } from "./publicPages/SearchResultPage";
@@ -87,7 +85,6 @@ export const App = () => {
         <Router>
           <Routes>
             <Route exact index path="/" element={<LandingPage />} />
-            <Route exact index path="/Pay" element={<Pay />} />
             <Route
               exact
               path="SearchResultPage"
