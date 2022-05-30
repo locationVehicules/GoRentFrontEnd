@@ -43,7 +43,7 @@ const GarageManager = () => {
             fontWeight: "bold",
           }}
         >
-          Change vehicules status
+          Change vehicle state
         </button>
         <button
           type="button"
@@ -55,7 +55,7 @@ const GarageManager = () => {
             fontWeight: "bold",
           }}
         >
-          Manage Check in and Check Out of vehicules
+          Manage Check in and Check Out of vehicles
         </button>
       </div>
 

@@ -158,106 +158,111 @@ const StatusForm = ({ displayStatusFrom, selectedVehicle }) => {
               </div>
             </div>
             <p id="alert">Check the box if the problem is soloved</p>
-            {update &&
-              (!problemes.noProblem ? (
-                <>
-                  <div className="m-1">
-                    <table className="table table-borderless text-center text-nowrap">
-                      <thead>
-                        <tr>
-                          <th></th>
-                          <th>Date</th>
-                          <th>Type</th>
-                          <th>Problem</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {problemes.map((p) => (
+            {update && (
+              <>
+                {!problemes.noProblem ? (
+                  <>
+                    <div className="m-1">
+                      <table className="table table-borderless text-center text-nowrap">
+                        <thead>
                           <tr>
-                            <td>
-                              <input
-                                className="form-check-input mt-0"
-                                type="checkbox"
-                                value={p.id}
-                                onClick={(v) => {
-                                  setSoloved(v.target.value);
-                                }}
-                              />
-                            </td>
-                            <td className="p-2 ">{p.post_date}</td>
-                            <td className="p-2 ">{p.type}</td>
-                            <td className="p-2 ">{p.probeleme}</td>
+                            <th></th>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Problem</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="d-flex m-1 p-3 ">
-                    <label
-                      htmlFor="state"
-                      className="fs-5 mx-3"
-                      style={{ color: "var(--big-title-color)" }}
-                    >
-                      State
-                    </label>
-                    <p
-                      className="form-control fs-6"
-                      id="renter-name"
-                      style={{
-                        border: 0,
-                        borderBottom: "2px solid var(--font-color-2)",
-                      }}
-                    >
-                      {nbProblem === problemes.length ? "available" : "broken"}
+                        </thead>
+                        <tbody>
+                          {problemes.map((p, index) => (
+                            <tr key={index}>
+                              <td>
+                                <input
+                                  className="form-check-input mt-0"
+                                  type="checkbox"
+                                  value={p.id}
+                                  onClick={(v) => {
+                                    setSoloved(v.target.value);
+                                  }}
+                                />
+                              </td>
+                              <td className="p-2 ">{p.post_date}</td>
+                              <td className="p-2 ">{p.type}</td>
+                              <td className="p-2 ">{p.probeleme}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="d-flex m-1 p-3 ">
+                      <label
+                        htmlFor="state"
+                        className="fs-5 mx-3"
+                        style={{ color: "var(--big-title-color)" }}
+                      >
+                        State
+                      </label>
+                      <p
+                        className="form-control fs-6"
+                        id="renter-name"
+                        style={{
+                          border: 0,
+                          borderBottom: "2px solid var(--font-color-2)",
+                        }}
+                      >
+                        {nbProblem === problemes.length ? "available" : "broken"}
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <p className="d-flex justify-content-center fs-5">
+                      No problems with this vehicle
                     </p>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <p className="d-flex justify-content-center fs-5">
-                    No problems with this vehicle
-                  </p>
-                  <div className="d-flex m-1 p-3 ">
-                    <label
-                      htmlFor="state"
-                      className="fs-5 mx-3"
-                      style={{ color: "var(--big-title-color)" }}
-                    >
-                      State
-                    </label>
-                    <p
-                      className="form-control fs-6"
-                      id="renter-name"
-                      style={{
-                        border: 0,
-                        borderBottom: "2px solid var(--font-color-2)",
-                      }}
-                    >
-                      {selectedVehicle.etat}
-                    </p>
-                  </div>
-                </>
-              ))}
-
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn"
-                data-dismiss="modal"
-                onClick={displayStatusFrom}
-                style={{ background: "var(--bg_icon_color)", color: "black" }}
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                className="btn"
-                onClick={() => save()}
-                style={{ background: "var(--btn_color1)", color: "white" }}
-              >
-                Save changes
-              </button>
-            </div>
+                    <div className="d-flex m-1 p-3 ">
+                      <label
+                        htmlFor="state"
+                        className="fs-5 mx-3"
+                        style={{ color: "var(--big-title-color)" }}
+                      >
+                        State
+                      </label>
+                      <p
+                        className="form-control fs-6"
+                        id="renter-name"
+                        style={{
+                          border: 0,
+                          borderBottom: "2px solid var(--font-color-2)",
+                        }}
+                      >
+                        {selectedVehicle.etat}
+                      </p>
+                    </div>
+                  </>
+                )}
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="btn"
+                    data-dismiss="modal"
+                    onClick={displayStatusFrom}
+                    style={{
+                      background: "var(--bg_icon_color)",
+                      color: "black",
+                    }}
+                  >
+                    Close
+                  </button>
+                  {!problemes.noProblem && (<button
+                    type="button"
+                    className="btn"
+                    onClick={() => save()}
+                    style={{ background: "var(--btn_color1)", color: "white" }}
+                  >
+                    Save changes
+                  </button>)}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -265,13 +270,21 @@ const StatusForm = ({ displayStatusFrom, selectedVehicle }) => {
   );
 };
 
-const StatusQRscanner = ({ displayStatusFrom }) => {
+const StatusQRscanner = ({ displayStatusFrom, setSelectedVehicle }) => {
   const delay = 100;
   const [result, setResult] = useState();
+  const [vehicle, setVehicle] = useState();
 
   useEffect(() => {
-    result !== undefined && displayStatusFrom();
+    if (result !== undefined) {
+      getVehicle(result);
+      setSelectedVehicle(vehicle);
+      vehicle && displayStatusFrom();
+    }
   }, [result]);
+  const getVehicle = async (res) => {
+    CarsAPIs.carDetail(parseInt(res)).then((data) => setVehicle(data));
+  };
 
   const handleError = (error) => {
     console.error(error);
@@ -300,6 +313,9 @@ export const Status = () => {
 
   const displayStatusFrom = () => {
     display ? setDisplay(false) : setDisplay(true);
+  };
+  const setSelectedVehicleFromQR = (vehicle) => {
+    setSelectedVehicle(vehicle);
   };
 
   const [vehicles, setVehicles] = useState();
@@ -341,7 +357,10 @@ export const Status = () => {
             borderRadius: "10px",
           }}
         >
-          <StatusQRscanner displayStatusFrom={displayStatusFrom} />
+          <StatusQRscanner
+            displayStatusFrom={displayStatusFrom}
+            setSelectedVehicle={setSelectedVehicleFromQR}
+          />
           {display && (
             <StatusForm
               displayStatusFrom={displayStatusFrom}
