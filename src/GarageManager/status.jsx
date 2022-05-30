@@ -1,12 +1,15 @@
 import Select from "react-select";
 import React, { useState, useEffect } from "react";
 import QrReader from "react-qr-scanner";
+import CarsAPIs from "../GetSetData/useAPIs/CarsAPIs";
 
 const StatusForm = ({ displayStatusFrom }) => {
   const vehicleState = [
     { value: "rented", label: "Rented" },
     { value: "available", label: "Available" },
     { value: "under", label: "Under" },
+    { value: "reserved", label: "Reserved" },
+    { value: "broken", label: "Broken" },
   ];
   return (
     <div
@@ -205,7 +208,7 @@ const StatusQRscanner = ({ displayStatusFrom }) => {
   const handleError = (error) => {
     console.error(error);
   };
-  
+
   return (
     <>
       <QrReader
@@ -224,18 +227,26 @@ const StatusQRscanner = ({ displayStatusFrom }) => {
 };
 
 export const Status = () => {
-  const vehicles = [];
-  for (let i = 0; i < 3; i++) {
-    vehicles.push(`bus/${i + 1}.png`);
-    vehicles.push(`moto/${i + 1}.png`);
-    vehicles.push(`van/${i + 1}.png`);
-    vehicles.push(`car/${i + 1}.png`);
-  }
+
   const [display, setDisplay] = useState(false);
 
   const displayStatusFrom = () => {
     display ? setDisplay(false) : setDisplay(true);
   };
+
+  const [vehicles, setVehicles] = useState();
+  const [data, setData] = useState(false);
+
+  const getVehicleList = async () => {
+    await CarsAPIs.carsList().then((data) =>
+      setVehicles(data.filter((data) => data.etat !== "not available"))
+    );
+    setData(true);
+  };
+  useEffect(() => {
+    getVehicleList();
+  }, [data]);
+
   return (
     <div>
       <div className="p-3 d-flex flex-wrap justify-content-center" id="filterd">
@@ -250,45 +261,82 @@ export const Status = () => {
           <StatusQRscanner displayStatusFrom={displayStatusFrom} />
           {display && <StatusForm displayStatusFrom={displayStatusFrom} />}
         </div>
-        {vehicles.map((v, i) => (
-          <button
-            key={i}
-            style={{
-              height: "300px",
-              width: "240px",
-              borderRadius: "10px",
-            }}
-            onClick={displayStatusFrom}
-            className="card p-3 m-1 border d-flex flex-column justify-content-between"
-          >
-            <div
-              className="img-containe d-flex"
+        {vehicles &&
+          vehicles.map((v, i) => (
+            <button
+              onClick={() => {}}
+              key={i}
               style={{
-                maxHeight: "55%",
-                maxWidth: "100%",
+                width: "240px",
+                borderRadius: "10px",
               }}
+              className="card p-3 m-1 border d-flex flex-column justify-content-between"
             >
-              <img
-                className=" p-2"
-                src={require(`../img/vehicles/${v}`)}
-                alt="accent2016"
-              />
-            </div>
-
-            <ul
-              className="info d-flex flex-column"
-              style={{
-                maxHeight: "45%",
-                maxWidth: "100%",
-              }}
-            >
-              <li className="d-flex">123456 124 25</li>
-              <li className="d-flex">Peugeot 3008 | white</li>
-              <li className="d-flex">Family</li>
-              <li className="d-flex">State</li>
-            </ul>
-          </button>
-        ))}
+              <div
+                className="img-containe d-flex"
+                style={{
+                  maxHeight: "50%",
+                  maxWidth: "100%",
+                }}
+              >
+                <img
+                  className=" p-2"
+                  src={`https://cdn.imagin.studio/getImage?customer=img&${v.photo
+                    .replaceAll("%3D", "=")
+                    .replace(
+                      "%26",
+                      "&"
+                    )}&angle=23&width=2600&zoomType=fullscreen`}
+                  alt={`${v.name}_photo`}
+                />
+              </div>
+              <ul
+                className="info list-unstyled d-flex flex-column align-items-start"
+                style={{
+                  maxHeight: "50%",
+                  maxWidth: "100%",
+                }}
+              >
+                <li>
+                  <i
+                    className="bi bi-123 px-1 py-0 fs-5"
+                    style={{
+                      color: "black",
+                      border: "1px solid black",
+                      borderRadius: "6px",
+                    }}
+                  ></i>
+                  <span className="px-1">{v.matricule} </span>
+                </li>
+                <li>
+                  <img
+                    style={{
+                      maxHeight: "40px",
+                      marginRight: "10px",
+                    }}
+                    src="https://img.icons8.com/ios-filled/50/000000/audi.png"
+                    alt="audi"
+                  />
+                  {v.name}
+                </li>
+                <li>
+                  <i className="bi bi-slack fs-5" style={{ color: "black" }}></i>
+                  <span>{`${v.modele}`} </span>
+                </li>
+                <li>
+                  <i
+                    className="bi bi-clipboard-pulse fs-5"
+                    style={{ color: "black" }}
+                  ></i>
+                  <span>{`${v.etat}`} </span>
+                </li>
+                <li>
+                  <i className="bi bi-geo fs-5" style={{ color: "black" }}></i>
+                  <span>{`Spot: ${v.spotLetter}-${v.spotNumber}`} </span>
+                </li>
+              </ul>
+            </button>
+          ))}
       </div>
     </div>
   );

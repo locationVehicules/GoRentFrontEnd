@@ -5,7 +5,7 @@ import { Status } from "./status";
 
 export const ParkingManagement = () => {
   return (
-    <Main title={"Parking Management "}>
+    <Main title={"Parking Management"}>
       <GarageManager />
     </Main>
   );

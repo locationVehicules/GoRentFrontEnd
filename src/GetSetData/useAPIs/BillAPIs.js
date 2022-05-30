@@ -47,4 +47,18 @@ export default class BillAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
+
+  static Pay(total) {
+    return fetch("http://127.0.0.1:8000/payment/Pay/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        aumount: total,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => data);
+  }
 }

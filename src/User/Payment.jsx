@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Main } from "../components/Main";
 import { DriverInfos, PaimentInfos } from "./GetInfos";
-// import { MainPage } from "../Payment/index";
 
 export const Payment = ({ user }) => {
   const [display, setDisplay] = useState(false);
@@ -20,23 +19,23 @@ export const Payment = ({ user }) => {
       <DriverInfos enterprise={true} />
       <PaimentInfos path={`${user}/${user}`} />
       <hr className="mb-4" />
-      {/* <MainPage /> */}
-      {display && <Confirmation user={user} />}
       <div className="btn d-flex justify-content-end align-items-center">
         <button
           className="btn"
-          type="submit"
           style={{
             borderRadius: "10px",
             height: 40,
             color: "white",
             background: "var(--pr1)",
           }}
-          onClick={displayConfirmation}
+          onClick={() => {
+            displayConfirmation();
+          }}
         >
           Continue to checkout
         </button>
       </div>
+      {display && <Confirmation user={user} />}
     </Main>
   );
 };

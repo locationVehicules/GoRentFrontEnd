@@ -13,7 +13,7 @@ export const MyContract = ({user}) => {
   const contartPath = "GetSetData/1234567890_Contract.pdf";
   const billPath = "GetSetData/1234567890_Bill.pdf";
 
-  const withQRcode = false;
+  const withQRcode = true;
   const [numPages, setNumPages] = useState(null);
 
   const onDocumentLoadSucces = ({ numPages }) => {

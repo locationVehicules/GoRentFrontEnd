@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import Select from "react-select";
 import { Reservation } from "../GetSetData/Contexts";
-
+import { Elements, CardElement } from "@stripe/react-stripe-js";
 import "../css/getInfos.css";
+
+import { loadStripe } from "@stripe/stripe-js";
+const promise = loadStripe(
+  "pk_test_51L4GmXH0mDiv5izs9R5HetS6n358XhnEuD82g3yMlCyUVC73YdOOqZkxzG3jzPEaXC4doZQwiIAb4sKZHNp2T9wY00o3iQQmQJ"
+);
 
 export class DriverInfos extends Component {
   constructor(props) {
@@ -94,7 +99,6 @@ export class PaimentInfos extends Component {
   state = {
     onSpot: false,
   };
-
   payOnSpot = () => {
     this.state.onSpot
       ? this.setState({
@@ -135,10 +139,10 @@ export class PaimentInfos extends Component {
               </div>
             </div>
             {!this.state.onSpot && (
-              <form className="needs-validation" noValidate>
+              <form className="needs-validation" id="payment-form">
                 <div className="row">
-                  <div className="col-md-6 mb-3">
-                    <label htmlFor="cc-name">Card Name</label>
+                  <div className="col-md-4 mb-3">
+                    <label htmlFor="cc-name">Card name</label>
                     <input
                       type="text"
                       className="form-control"
@@ -147,8 +151,8 @@ export class PaimentInfos extends Component {
                       required
                     />
                   </div>
-                  <div className="col-md-6 mb-3">
-                    <label htmlFor="cc-number">Credit card number</label>
+                  <div className="col-md-4 mb-3">
+                    <label htmlFor="cc-number">Card number</label>
                     <input
                       type="text"
                       className="form-control"
@@ -156,11 +160,54 @@ export class PaimentInfos extends Component {
                       placeholder=""
                       required
                     />
-                    <div className="invalid-feedback">
-                      Credit card number is required
-                    </div>
+                  </div>
+                  <div className="col-md-4 mb-3">
+                    <label htmlFor="cc-number">Expires on</label>
+                    <input
+                      type="date"
+                      className="form-control"
+                      id="cc-number"
+                      placeholder=""
+                      required
+                    />
                   </div>
                 </div>
+                <label htmlFor={"card-element"}>
+                  Confirm card informations
+                </label>
+                <Elements stripe={promise}>
+                  <CardElement
+                    id="card-element"
+                    className="form-control"
+                    options={{
+                      style: {
+                        base: {
+                          iconColor: "#000",
+                          color: "#000",
+                          fontWeight: "500",
+                          fontSize: "16px",
+                          fontSmoothing: "antialiased",
+                          ":-webkit-autofill": {
+                            color: "#000",
+                          },
+                          "::placeholder": {
+                            color: "#000",
+                          },
+                        },
+                        invalid: {
+                          iconColor: "#ff4c4c",
+                          color: "#ff4c4c",
+                        },
+                      },
+                    }}
+                    onChange={() => this.handleChange}
+                  />
+                </Elements>
+                {this.state.error && (
+                  <div className="card-error" role="alert">
+                    {this.state.error}
+                  </div>
+                )}
               </form>
             )}
             <div className="row">
