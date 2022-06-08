@@ -402,7 +402,7 @@ export class SignUp extends Component {
 export class GetRenterInfos extends Component {
   constructor(props) {
     super(props);
-    document.body.style.background = "var(--btn_color)";
+    document.body.style.background = "var(--btn_color1)";
   }
   state = {
     gender: "",
@@ -769,7 +769,7 @@ export const ImgUploadComponent = (props) => {
   };
   const setUploadedImage = (event) => {
     setImage(URL.createObjectURL(event.target.files[0]));
-    console.log(URL.createObjectURL(event.target.files[0]));
+    console.log(event.target.files[0]);
   };
 
   return (

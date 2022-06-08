@@ -37,6 +37,10 @@ export class VehicleCard extends Component {
   }
 
   render() {
+    let totalHours =
+      (new Date(this.context.returnDate[0]) - new Date(this.context.rentDate[0])) / 36e5;
+    this.context.nbHours[1](Math.round(totalHours % 24));
+    this.context.nbDays[1](Math.round(totalHours / 24));
     return (
       <section
         style={{ backgroundColor: "white", borderRadius: "30px" }}
@@ -138,41 +142,14 @@ export class VehicleCard extends Component {
               <div className="d-inline review">
                 <div className="paiement py-2">
                   <h5 className="p-2">
-                    Price for
-                    {` ${
-                      (new Date(this.context.returnDate[0].slice(0, 10)) -
-                        new Date(this.context.rentDate[0].slice(0, 10))) /
-                        (1000 * 3600 * 24) +
-                      1
-                    } `}
-                    days
+                    <span>{`Price for ${this.context.nbDays[0]} days`}</span>
+                    {this.context.nbHours[0] !== 0 && (<span>{` and ${this.context.nbHours[0]} hours`}</span>)}
                     <br />
                     <strong>
-                      {((new Date(this.context.returnDate[0].slice(0, 10)) -
-                        new Date(this.context.rentDate[0].slice(0, 10))) /
-                        (1000 * 3600 * 24) +
-                        1) *
-                        this.context.selectedVehicle[0].priceD}{" "}
-                      <span>DZD</span>
-                    </strong>
-                  </h5>
-                  <h5 className="p-2">
-                    Price for
-                    {` ${
-                      Math.abs(
-                        new Date(this.context.returnDate[0]) -
-                          new Date(this.context.rentDate[0])
-                      ) / 36e5
-                    } `}
-                    hours
-                    <br />
-                    <strong>
-                      {(Math.abs(
-                        new Date(this.context.returnDate[0]) -
-                          new Date(this.context.rentDate[0])
-                      ) /
-                        36e5) *
-                        this.context.selectedVehicle[0].priceH}{" "}
+                      {this.context.nbDays[0] *
+                        this.context.selectedVehicle[0].priceD +
+                        this.context.nbHours[0] *
+                          this.context.selectedVehicle[0].priceH}
                       <span>DZD</span>
                     </strong>
                   </h5>
@@ -257,7 +234,6 @@ export class Accessories extends Component {
     total: 0,
     toolIndexs: "",
     tools: null,
-    calcMethod: "byDay",
   };
 
   getTools = (price, id) => {
@@ -305,20 +281,9 @@ export class Accessories extends Component {
   };
 
   render() {
-    let daysPrice =
-      ((new Date(this.context.returnDate[0].slice(0, 10)) -
-        new Date(this.context.rentDate[0].slice(0, 10))) /
-        (1000 * 3600 * 24) +
-        1) *
-      this.context.selectedVehicle[0].priceD;
-
-    let hoursPrice =
-      (Math.abs(
-        new Date(this.context.returnDate[0]) -
-          new Date(this.context.rentDate[0])
-      ) /
-        36e5) *
-      this.context.selectedVehicle[0].priceH;
+    let price =
+      this.context.nbDays[0] * this.context.selectedVehicle[0].priceD +
+      this.context.nbHours[0] * this.context.selectedVehicle[0].priceH;
 
     return (
       <section id="acces" className="container d-flex flex-column my-5">
@@ -350,48 +315,14 @@ export class Accessories extends Component {
 
         <p className="px-3 fs-4 mt-4">
           <b>Total:</b>
-          <br />
-          <span> {daysPrice + this.state.total} DZD</span>
-          {" Day price"}
-          <input
-            className="m-2"
-            type="radio"
-            value="byDay"
-            name="calcMeyhod"
-            required
-            onChange={(e) =>
-              this.setState({ calcMethod: e.target.value })
-            }
-          />
-          <br />
-          <span> {hoursPrice + this.state.total} DZD</span> {" Hour price"}
-          <input
-            className="m-2"
-            type="radio"
-            value="byHour"
-            name="calcMeyhod"
-            required
-            onChange={(e) => this.setState({ calcMethod: e.target.value })}
-          />
+          <span> {price + this.state.total} DZD</span>
         </p>
-
         <Link to={`/${this.path}`}>
           <button
             className="m-2"
             id="next"
             onClick={() => {
-              switch (this.state.calcMethod) {
-                case "byDay":
-                  this.context.total[1](daysPrice + this.state.total);
-                  this.context.calcMethod[1]("byDay");
-                  break;
-                case "byHour":
-                  this.context.total[1](hoursPrice + this.state.total);
-                  this.context.calcMethod[1]("byHour");
-                  break;
-                default:
-                  break;
-              }
+              this.context.total[1](price + this.state.total);
               this.context.tools[1](this.state.toolIndexs);
             }}
           >

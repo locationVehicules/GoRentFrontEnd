@@ -16,7 +16,7 @@ const Check = ({ displayCheckFrom }) => {
       role="dialog"
     >
       <div
-        className="modal-dialog modal-dialog-centered  modal-lg"
+        className="modal-dialog modal-dialog-centered modal-lg"
         role="dialog"
       >
         <div className="modal-content">
@@ -26,18 +26,26 @@ const Check = ({ displayCheckFrom }) => {
             </h4>
           </div>
           <div className="modal-body">
-            <div className="driver-info d-flex flex-md-row flex-column m-2 p-3 border">
+            <h5
+              style={{
+                border: 0,
+                borderBottom: "3px solid var(--btn_color1_1)",
+              }}
+            >
+              Renter and Driver
+            </h5>
+            <div className="driver-info d-flex flex-md-row flex-column mb-2 p-1">
               <div className="w-100">
-                <div className="m-1">
+                <div>
                   <label
                     htmlFor="renter-name"
-                    className="fs-5"
-                    style={{ color: "var(--font-color-2)" }}
+                    className="fs-6"
+                    style={{ color: "var(--font-color-3)" }}
                   >
                     Renter Name
                   </label>
                   <p
-                    className="form-control fs-5"
+                    className="form-control fs-6"
                     id="renter-name"
                     style={{
                       border: 0,
@@ -47,16 +55,16 @@ const Check = ({ displayCheckFrom }) => {
                     Safa Benabdessadok
                   </p>
                 </div>
-                <div className="m-1">
+                <div>
                   <label
                     htmlFor="dirver-name"
-                    className="fs-5"
-                    style={{ color: "var(--font-color-2)" }}
+                    className="fs-6"
+                    style={{ color: "var(--font-color-3)" }}
                   >
                     Dirver Name
                   </label>
                   <p
-                    className="form-control fs-5"
+                    className="form-control fs-6"
                     id="dirver-name"
                     style={{
                       border: 0,
@@ -67,34 +75,47 @@ const Check = ({ displayCheckFrom }) => {
                   </p>
                 </div>
               </div>
-              <div className="w-100 m-1 d-flex flex-column fs-5 ">
+              <div className="w-100 d-flex flex-column fs-6 ">
                 <label
                   htmlFor="photo-permit"
-                  className="fs-5"
-                  style={{ color: "var(--font-color-2)" }}
+                  className="fs-6"
+                  style={{ color: "var(--font-color-3)" }}
                 >
                   Driver Photo
                 </label>
-                <div className="m-auto mt-1 w-100 h-100 border rounded">
-                  photo
+                <div
+                  className="img-containe d-flex"
+                  style={{
+                    maxHeight: "100%",
+                    maxWidth: "50%",
+                  }}
+                >
+                  <img className=" p-2" src={""} alt={`${"Driver"}_photo`} />
                 </div>
               </div>
             </div>
-
-            <div className="vehicle-info d-flex flex-md-row flex-column m-2 p-3 border ">
+            <h5
+              style={{
+                border: 0,
+                borderBottom: "3px solid var(--btn_color1_1)",
+              }}
+            >
+              Vehicle and Tools
+            </h5>
+            <div className="vehicle-info d-flex flex-md-row flex-column p-1 mb-2 ">
               <div className="w-100">
-                <div className="d-flex flex-md-row flex-column ">
-                  <div className="w-100 m-1 d-flex flex-column fs-5">
-                    <div className="m-1">
+                <div className="d-flex flex-md-row flex-column">
+                  <div className="w-100 m-1 d-flex flex-column fs-6">
+                    <div>
                       <label
                         htmlFor="renter-name"
-                        className="fs-5"
-                        style={{ color: "var(--font-color-2)" }}
+                        className="fs-6"
+                        style={{ color: "var(--font-color-3)" }}
                       >
                         Registration Number
                       </label>
                       <p
-                        className="form-control fs-5"
+                        className="form-control fs-6"
                         id="renter-name"
                         style={{
                           border: 0,
@@ -104,16 +125,16 @@ const Check = ({ displayCheckFrom }) => {
                         123456 124 25
                       </p>
                     </div>
-                    <div className="m-1">
+                    <div>
                       <label
                         htmlFor="renter-name"
-                        className="fs-5"
-                        style={{ color: "var(--font-color-2)" }}
+                        className="fs-6"
+                        style={{ color: "var(--font-color-3)" }}
                       >
                         Model and Color
                       </label>
                       <p
-                        className="form-control fs-5"
+                        className="form-control fs-6"
                         id="renter-name"
                         style={{
                           border: 0,
@@ -123,106 +144,75 @@ const Check = ({ displayCheckFrom }) => {
                         Peugeot 3008 | white
                       </p>
                     </div>
-                    <div className="m-1">
+                    <div className="d-flex justify-content-center">
                       <label
                         htmlFor="renter-name"
-                        className="fs-5"
-                        style={{ color: "var(--font-color-2)" }}
+                        className="fs-6 m-2"
+                        style={{ color: "var(--font-color-3)" }}
                       >
-                        Type
+                        Spot
                       </label>
                       <p
-                        className="form-control fs-5"
+                        className="form-control fs-6"
                         id="renter-name"
                         style={{
                           border: 0,
                           borderBottom: "2px solid var(--font-color-2)",
                         }}
                       >
-                        Family
+                        A-1
                       </p>
                     </div>
                   </div>
-                  <div className="w-100 m-1 d-flex flex-column fs-5 ">
+                  <div className="w-100 d-flex flex-column fs-6 ">
                     <label
-                      htmlFor="photo-permit"
-                      className="fs-5"
-                      style={{ color: "var(--font-color-2)" }}
+                      className="fs-6"
+                      style={{ color: "var(--font-color-3)" }}
                     >
                       Vehicle Photo
                     </label>
-                    <div className="m-auto mt-1 w-100 h-100 border rounded">
-                      {" "}
-                      photo{" "}
+                    <div
+                      className="img-containe d-flex border"
+                      style={{
+                        maxHeight: "80%",
+                        maxWidth: "80%",
+                      }}
+                    >
+                      <img
+                        className=" p-2"
+                        src={`https://cdn.imagin.studio/getImage?customer=img&${""}
+                          .replaceAll("%3D", "=")
+                          .replace(
+                            "%26",
+                            "&"
+                          )}&angle=23&width=2600&zoomType=fullscreen`}
+                        alt={`${"selectedVehicle.name"}_photo`}
+                      />
                     </div>
                   </div>
                 </div>
-                <div className="m-1">
+                <div>
                   <label
                     htmlFor="renter-name"
-                    className="fs-5"
-                    style={{ color: "var(--font-color-2)" }}
+                    className="fs-6 m-2"
+                    style={{ color: "var(--font-color-3)" }}
                   >
-                    Spot Number
+                    Tools
                   </label>
                   <p
-                    className="form-control fs-5"
+                    className="form-control fs-6"
                     id="renter-name"
                     style={{
+                      width: "50%",
                       border: 0,
                       borderBottom: "2px solid var(--font-color-2)",
                     }}
                   >
-                    0003
+                    A-1
                   </p>
-                </div>
-                <div className="m-1">
-                  <label
-                    htmlFor="renter-name"
-                    className="fs-5"
-                    style={{ color: "var(--font-color-2)" }}
-                  >
-                    Problems
-                  </label>
-                  <p id="alert">Check the box if the problem is soloved</p>
-                  <ul className="list-unstyled">
-                    <li>
-                      <div className="input-group mb-3">
-                        <div className="d-flex justify-content-center input-group-text text-wrap">
-                          <input
-                            className="form-check-input mt-0"
-                            type="checkbox"
-                            value=""
-                          />
-                          <div>
-                            <span className="p-2 ">date</span>
-                            <span className="p-2 ">justification</span>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
                 </div>
               </div>
             </div>
-            <div className="d-flex m-2 p-3 ">
-              <label
-                htmlFor="state"
-                className="fs-5 mx-3"
-                style={{ color: "var(--font-color-2)" }}
-              >
-                State
-              </label>
-
-              <Select
-                className="vehicle-state w-100"
-                classNamePrefix="select"
-                defaultValue={vehicleState[0]}
-                name="vehicle-state"
-                options={vehicleState}
-              />
-            </div>
-
             <div className="modal-footer">
               <button
                 type="button"

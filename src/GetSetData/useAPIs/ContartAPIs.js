@@ -5,7 +5,7 @@ export default class ContartAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
-  
+
   static ContratDetail(id) {
     return fetch(`http://127.0.0.1:8000/Contrat/ContratDetail/${id}`)
       .then((response) => response.json())
@@ -13,9 +13,15 @@ export default class ContartAPIs {
       .catch((err) => console.log(err));
   }
 
-  static AddContrat() {
-    return fetch(`http://127.0.0.1:8000/Contrat/AddContrat/`)
-      .then((response) => response.json())
+  static AddContrat(data) {
+    return fetch(`http://127.0.0.1:8000/Contrat/AddContrat/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
       .then((data) => data)
       .catch((err) => console.log(err));
   }

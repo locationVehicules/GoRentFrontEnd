@@ -1,19 +1,29 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Main } from "../components/Main";
 import { Confirmation } from "../Owner/BlackList";
 import { PaimentInfos } from "./GetInfos";
+import { Reservation } from "../GetSetData/Contexts";
+import ReservationAPIs from "../GetSetData/useAPIs/ReservationAPIs";
+import AdministrationAPIs from "../GetSetData/useAPIs/AdministrationAPIs";
+import ContartAPIs from "../GetSetData/useAPIs/ContartAPIs";
+import PaymentAPIs from "../GetSetData/useAPIs/paymentAPIs";
+import BillAPIs from "../GetSetData/useAPIs/BillAPIs";
 
 import SignaturePad from "react-signature-canvas";
 
 import { Document, Page, pdfjs } from "react-pdf/dist/esm/entry.webpack";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-export const MyContract = ({user}) => {
-  const contartPath = "GetSetData/1234567890_Contract.pdf";
-  const billPath = "GetSetData/1234567890_Bill.pdf";
+export const MyContract = ({ user }) => {
+  const context = useContext(Reservation);
+  const [contract, setContract] = useState(context.contract[0]);
+  const [bill, setBill] = useState(context.bill[0]);
 
-  const withQRcode = true;
+  const contartPath = contract.PDFFile;
+  const billPath = bill.PDFBill;
+
+  const sameDriver = true;
   const [numPages, setNumPages] = useState(null);
 
   const onDocumentLoadSucces = ({ numPages }) => {
@@ -35,6 +45,11 @@ export const MyContract = ({user}) => {
   };
   const displayRenew = () => {
     renew ? setRenewl(false) : setRenewl(true);
+  };
+
+  const Download = () => {
+    window.open(`http://127.0.0.1:8000${contartPath}`, "_blank");
+    window.open(`http://127.0.0.1:8000${billPath}`, "_blank");
   };
   return (
     <Main title={"Rentals Management"}>
@@ -60,7 +75,7 @@ export const MyContract = ({user}) => {
         </div>
         <Document
           className="d-flex flex-column align-items-center"
-          file={require(`../${contartPath}`)}
+          file={`http://127.0.0.1:8000${contartPath}`}
           onLoadSuccess={onDocumentLoadSucces}
         >
           {Array.from(new Array(numPages), (el, index) => (
@@ -73,7 +88,7 @@ export const MyContract = ({user}) => {
             />
           ))}
         </Document>
-        {!withQRcode ? (
+        {!sameDriver ? (
           <div className="d-flex justify-content-end flex-column flex-sm-row p-lg-3">
             <div className="d-flex flex-wrap">
               <button
@@ -119,7 +134,7 @@ export const MyContract = ({user}) => {
             <h1>Bill</h1>
             <Document
               className="d-flex flex-column align-items-center"
-              file={require(`../${billPath}`)}
+              file={`http://127.0.0.1:8000${billPath}`}
               onLoadSuccess={onDocumentLoadSucces}
             >
               {Array.from(new Array(numPages), (el, index) => (
@@ -164,14 +179,15 @@ export const MyContract = ({user}) => {
                       background: "var(--btn_color1)",
                       color: "var(--nav_font_color)",
                     }}
+                    onClick={() => Download()}
                   >
                     <i
-                      className="bi bi-printer fs-6"
+                      className="bi bi-download fs-6"
                       style={{
                         color: "white",
                       }}
                     ></i>
-                    Print
+                    Download
                   </button>
                 </div>
               </div>
@@ -192,19 +208,108 @@ export const MyContract = ({user}) => {
   );
 };
 
-const MySignaturePad = ({ AddSign }) => {
+export const MySignaturePad = ({ AddSign }) => {
+  const context = useContext(Reservation);
   let sigPad = useRef({});
-  let sign = "";
-  const clear = () => {
-    sigPad.current.clear();
-  };
+  const [driver, setDriver] = useState(null);
+  const [reservation, setReservation] = useState(null);
+  const [contract, setContract] = useState(null);
+  const [payment, setPayment] = useState(null);
+  const [bill, setBill] = useState(null);
+
   const submit = () => {
-    sign = sigPad.current.toDataURL();
-    console.log(sign);
-    AddSign();
+    if (context.driver[0] !== "") {
+      context.signatureR[1](sigPad.current);
+      context.stateR[1]("driver not yet signed");
+      getDriverID(context.driver[0]);
+    } else {
+      context.signatureR[1](sigPad.current.toDataURL("image/png"));
+      context.signatureD[1](sigPad.current.toDataURL("image/png"));
+      context.stateR[1]("completed");
+      getDriverID(7); //Uid;
+    }
   };
+
+  useEffect(() => {
+    driver && reserve();
+  }, [driver]);
+  useEffect(() => {
+    if (reservation) {
+      getContract();
+    }
+  }, [reservation]);
+  useEffect(() => {
+    if (contract) {
+      pay();
+      payInfo();
+    }
+  }, [contract]);
+  useEffect(() => {
+    if (payment) {
+      getBill();
+    }
+  }, [payment]);
+  useEffect(() => {
+    if (bill && contract) {
+      context.bill[1](bill);
+      context.contract[1](contract);
+    }
+  }, [bill, contract]);
+  useEffect(() => {
+    if (context.bill[0] && context.contract[0]) {
+      AddSign();
+    }
+  }, [context.bill[0], context.contract[0]]);
+
+  const reserve = async () => {
+    await ReservationAPIs.reservationCarOnLigne(context, driver).then((data) =>
+      setReservation(data.id)
+    );
+  };
+  const getContract = async () => {
+    let data = {
+      reservation: reservation,
+      signatureDriver: context.signatureD[0],
+      signatureRenter: context.signatureR[0],
+      type: "new",
+    };
+    await ContartAPIs.AddContrat(data).then((data) => setContract(data));
+  };
+  const pay = async () => {
+    return await PaymentAPIs.Pay(parseInt(context.total)).then((data) =>
+      console.log(data)
+    );
+  };
+  const payInfo = async () => {
+    return await PaymentAPIs.PayInfo({
+      method_paiment: context.paymentMethod[0],
+      cardNum: context.cardNum[0],
+      exDate: context.cardDate[0],
+      cardName: context.cardName[0],
+      Amount: context.total[0],
+      nbHour: context.nbHours[0],
+      nbDay: context.nbDays[0],
+    }).then((data) => setPayment(data));
+  };
+  const getBill = async () => {
+    let data = {
+      Contrat: contract.id,
+      promotion: context.promotion[0],
+      payment: payment.id,
+    };
+    return await BillAPIs.AddBill(data).then((data) => setBill(data));
+  };
+  const getDriverID = async (userId) => {
+    await AdministrationAPIs.DriverDetail(userId).then((data) =>
+      setDriver(data.id)
+    );
+  };
+
   const cancel = () => {
     AddSign();
+  };
+  const clear = () => {
+    sigPad.current.clear();
   };
   return (
     <div

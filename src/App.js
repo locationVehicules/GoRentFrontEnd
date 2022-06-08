@@ -54,7 +54,7 @@ export const App = () => {
   afterHcurrentDate.setMinutes(
     afterHcurrentDate.getMinutes() - afterHcurrentDate.getTimezoneOffset()
   );
-  afterHcurrentDate.setHours(afterHcurrentDate.getHours() + 2);
+  afterHcurrentDate.setHours(afterHcurrentDate.getHours() + 25);
   afterHcurrentDate = afterHcurrentDate.toISOString().slice(0, 16);
   // Reservation data
   const [rentDate, setRentDate] = useState(currentDate);
@@ -63,9 +63,23 @@ export const App = () => {
   const [returnLocation, setReturnLocation] = useState("Adrar");
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [selectedParking, setSelectedParking] = useState(null);
-  const [calcMethod, setCalcMethod] = useState(null);
+  let totalHours = (new Date(returnDate)- new Date(rentDate)) / 36e5;
+  const [nbHours, setNbHours] = useState(Math.round(totalHours % 24));
+  const [nbDays, setNbDay] = useState(Math.round(totalHours / 24));
   const [total, setTotal] = useState(0);
   const [tools, setTools] = useState("");
+  const [DriverID, setDriverID] = useState("");
+  const [RenterID, setRenterID] = useState("");
+  const [payMethod, setPayMethod] = useState("On Ligne");
+  const [signatureD, setSignatureD] = useState(null);
+  const [signatureR, setSignatureR] = useState(null);
+  const [stateR, setStateR] = useState(null);
+  const [cardNum, setCardNum] = useState("");
+  const [cardDate, setCardDate] = useState("");
+  const [cardName, setCardName] = useState("");
+  const [promo, setPromo] = useState(0);
+  const [bill, setBill] = useState(null);
+  const [contract, setContract] = useState(null);
 
   return (
     <>
@@ -77,9 +91,22 @@ export const App = () => {
           returnLocation: [returnLocation, setReturnLocation],
           selectedVehicle: [selectedVehicle, setSelectedVehicle],
           selectedParking: [selectedParking, setSelectedParking],
-          calcMethod: [calcMethod, setCalcMethod],
+          nbHours: [nbHours, setNbHours],
+          nbDays: [nbDays, setNbDay],
           total: [total, setTotal],
           tools: [tools, setTools],
+          driver: [DriverID, setDriverID],
+          renter: [RenterID, setRenterID],
+          paymentMethod: [payMethod, setPayMethod],
+          cardNum: [cardNum, setCardNum],
+          cardDate: [cardDate, setCardDate],
+          cardName: [cardName, setCardName],
+          signatureD: [signatureD, setSignatureD],
+          signatureR: [signatureR, setSignatureR],
+          stateR: [stateR, setStateR],
+          promotion: [promo, setPromo],
+          bill: [bill, setBill],
+          contract: [contract, setContract],
         }}
       >
         <Router>

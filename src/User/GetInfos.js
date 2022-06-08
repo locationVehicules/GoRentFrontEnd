@@ -57,6 +57,8 @@ export class DriverInfos extends Component {
                     id="id"
                     placeholder="Driver ID"
                     required
+                    value={this.context.driver[0]}
+                    onChange={(d) => this.context.driver[1](d.target.value)}
                   />
                 )}
                 <div className="form-check">
@@ -90,6 +92,7 @@ export class DriverInfos extends Component {
     );
   }
 }
+DriverInfos.contextType = Reservation;
 
 export class PaimentInfos extends Component {
   constructor(props) {
@@ -98,6 +101,9 @@ export class PaimentInfos extends Component {
   }
   state = {
     onSpot: false,
+    promo: false,
+    code: "",
+    promotion: 0,
   };
   payOnSpot = () => {
     this.state.onSpot
@@ -108,7 +114,20 @@ export class PaimentInfos extends Component {
           onSpot: true,
         });
   };
+  validPromo = () => {
+    console.log("call valide code promo", this.state.code);
+    let returnedData = 0;
+    this.setState({ promotion: returnedData });
+  };
+
+  setCode = (codePromo) => {
+    this.setState({ code: codePromo });
+    codePromo.length !== 0
+      ? this.setState({ promo: true })
+      : this.setState({ promo: false });
+  };
   render() {
+    this.context.promotion[1](this.state.promotion);
     return (
       <div className="container">
         <div className="row">
@@ -125,7 +144,12 @@ export class PaimentInfos extends Component {
                     <input
                       className="form-check-input"
                       type="checkbox"
-                      onClick={this.payOnSpot}
+                      onClick={() => {
+                        this.state.onSpot
+                          ? this.context.paymentMethod[1]("On Ligne")
+                          : this.context.paymentMethod[1]("On Spot");
+                        this.payOnSpot();
+                      }}
                       id="flexCheckDefault"
                     />
                     <label
@@ -149,6 +173,8 @@ export class PaimentInfos extends Component {
                       id="cc-name"
                       placeholder=""
                       required
+                      value={this.context.cardName[0]}
+                      onChange={(e) => this.context.cardName[1](e.target.value)}
                     />
                   </div>
                   <div className="col-md-4 mb-3">
@@ -159,6 +185,8 @@ export class PaimentInfos extends Component {
                       id="cc-number"
                       placeholder=""
                       required
+                      value={this.context.cardNum[0]}
+                      onChange={(e) => this.context.cardNum[1](e.target.value)}
                     />
                   </div>
                   <div className="col-md-4 mb-3">
@@ -168,6 +196,8 @@ export class PaimentInfos extends Component {
                       className="form-control"
                       id="cc-number"
                       placeholder=""
+                      value={this.context.cardDate[0]}
+                      onChange={(e) => this.context.cardDate[1](e.target.value)}
                       required
                     />
                   </div>
@@ -210,7 +240,7 @@ export class PaimentInfos extends Component {
                 )}
               </form>
             )}
-            <div className="row">
+            <div className="row align-items-center">
               <div className="col-md-6 mb-3">
                 <label htmlFor="promo-code">Promotion code</label>
                 <input
@@ -218,9 +248,29 @@ export class PaimentInfos extends Component {
                   className="form-control"
                   id="promo-code"
                   placeholder=""
+                  value={this.state.code}
+                  onChange={(c) => this.setCode(c.target.value)}
                 />
               </div>
-              <div className="col-md-6 mb-3">
+              {this.state.promo && (
+                <div className="col-md-1 m-0 mb-3">
+                  <input
+                    type="button"
+                    className="btn border mt-4"
+                    id="promo-validator"
+                    placeholder=""
+                    value="validate"
+                    style={{
+                      width: "90px",
+                      height: "38px",
+                      background: "var(--btn_color3)",
+                      color: "var(--nav_font_color)"
+                    }}
+                    onClick={() => this.validPromo()}
+                  />
+                </div>
+              )}
+              <div className="col-md-5 mb-3">
                 <label htmlFor="new-total">New Total</label>
                 <input
                   type="text"
