@@ -14,12 +14,17 @@ export const BlackList = () => {
     renters.push(renter);
   }
   const [display, setDisplay] = useState(false);
+  const [userID, setUserID] = useState();
 
-  const displayAddForm = () => {
+  const displayConfirmation = () => {
     display ? setDisplay(false) : setDisplay(true);
   };
   const unblock = (e) => {
-    console.log(e.target);
+    displayConfirmation();
+    !userID && setUserID(e);
+  };
+  const yesFunction = async () => {
+    console.log(`${userID} unblocked`);
   };
   return (
     <Main title={"Black List"}>
@@ -36,109 +41,34 @@ export const BlackList = () => {
               />
             </form>
           </div>
-          <button
-            onClick={displayAddForm}
-            type="button"
-            className="btn mx-lg-2 m-1 d-flex justify-content-center align-items-center print-btn rounded-circle"
-          >
-            <i className="bi bi-plus-lg fs-6"></i> Add
-          </button>
         </div>
-        {display && <AddForm displayAddForm={displayAddForm} />}
         <AddRemoveTable
           headerList={["Renter ID", "Full Name", "Date", "Justification"]}
           bodyLines={renters}
           btnValue={"Unblock"}
           functionBtn={unblock}
         />
+        {display && (
+          <Confirmation
+            displayConfirmation={displayConfirmation}
+            yesFunction={yesFunction}
+            confirmationText={" You want to unblock this driver?"}
+          />
+        )}
       </div>
     </Main>
   );
 };
 
-const AddForm = ({ displayAddForm }) => {
-  const renters = [];
-  const renter = [
-    "SB19042019",
-    "BENABDESSADOK Safa",
-    "21-04-2022",
-    " make a lot of ifraction",
-  ];
-  for (let i = 0; i < 30; i++) {
-    renters.push(renter);
-  }
-  const [display, setDisplay] = useState(false);
-
-  const displayConfirmation = () => {
-    display ? setDisplay(false) : setDisplay(true);
-  };
-  const block = (e) => {
+export const Confirmation = ({
+  displayConfirmation,
+  confirmationText,
+  yesFunction,
+}) => {
+  const yes = () => {
+    yesFunction();
     displayConfirmation();
   };
-  return (
-    <div
-      className="modal fade show d-block"
-      id="exampleModalCenter"
-      tabIndex="-1"
-      role="dialog"
-    >
-      <div
-        className="modal-dialog modal-dialog-centered  modal-lg"
-        role="dialog"
-      >
-        <div className="modal-content">
-          <div className="modal-header">
-            <h4 className="modal-title" id="Ckeck Form">
-              Block renter
-            </h4>
-          </div>
-          <div className="modal-body">
-            <div id="search" className="d-flex m-1 mx-lg-2 px-3">
-              <form className="d-flex">
-                <i className="bi bi-search fs-5"></i>
-                <input
-                  className="form-control form-control-sm ml-3 fs-6"
-                  type="text"
-                  placeholder="Search renter"
-                  aria-label="Search"
-                />
-              </form>
-            </div>
-
-            <AddRemoveTable
-              headerList={["Renter ID", "Full Name", "Date", "Justification"]}
-              bodyLines={renters}
-              btnValue={"block"}
-              functionBtn={block}
-            />
-            {display && (
-              <Confirmation
-                displayConfirmation={displayConfirmation}
-                confirmationText={
-                  "If you block this renter, he will never can rent vehicles from GoRent agencys"
-                }
-              />
-            )}
-
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn"
-                data-dismiss="modal"
-                onClick={displayAddForm}
-                style={{ background: "var(--bg_icon_color)", color: "black" }}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export const Confirmation = ({ displayConfirmation, confirmationText }) => {
   return (
     <div
       className="modal fade show d-block"
@@ -173,7 +103,7 @@ export const Confirmation = ({ displayConfirmation, confirmationText }) => {
               type="button"
               className="btn accept-btn"
               data-dismiss="modal"
-              onClick={displayConfirmation}
+              onClick={()=>yes()}
               style={{ color: "black" }}
             >
               Yes

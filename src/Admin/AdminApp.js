@@ -13,7 +13,7 @@ export const AdminApp = () => {
   return (
     <>
       <SideNavBar userType="admin" userApp="Admin" />
-      {navigate && <Navigate to="Admin/Rent" replace={true} />}
+      {navigate && <Navigate to="Admin/User-management" replace={true} />}
       <Outlet />
     </>
   );

@@ -4,7 +4,7 @@ import { Main } from "../components/Main";
 import { ImgUploadComponent } from "../publicPages/LogPages";
 
 export const Settings = () => {
-  const type = "Entreprise";
+  const type = "Renter";
   const permitCategory = [
     { value: "A1", label: "A1" },
     { value: "A2", label: "A2" },

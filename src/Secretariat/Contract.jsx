@@ -6,7 +6,7 @@ import { Confirmation } from "../Owner/BlackList";
 import { Document, Page, pdfjs } from "react-pdf/dist/esm/entry.webpack";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-export const Contract = ({user}) => {
+export const Contract = ({ user }) => {
   const contartPath = "GetSetData/1234567890_Contract.pdf";
 
   const withQRcode = false;
@@ -16,12 +16,18 @@ export const Contract = ({user}) => {
     setNumPages(numPages);
   };
   const [display, setDisplay] = useState(false);
+  const [reservation, setReservation] = useState();
 
   const displayConfirmation = () => {
     display ? setDisplay(false) : setDisplay(true);
   };
   const confirmation = (e) => {
     displayConfirmation();
+    !reservation && setReservation(e);
+  };
+
+  const yesFunction = async () => {
+    console.log(`${reservation} validated`);
   };
   return (
     <Main title={"Rentals Management"}>
@@ -91,6 +97,7 @@ export const Contract = ({user}) => {
       {display && (
         <Confirmation
           displayConfirmation={displayConfirmation}
+          yesFunction={yesFunction}
           confirmationText={"Are you sure ?"}
         />
       )}

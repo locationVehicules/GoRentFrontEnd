@@ -12,8 +12,10 @@ export const SecretariatApp = () => {
 
   return (
     <>
-      <SideNavBar userType="secretariat" userApp="Secretary" />
-      {navigate && <Navigate to="Secretary/Rent" replace={true} />}
+      <SideNavBar userType="Secretary" userApp="Secretary" />
+      {navigate && (
+        <Navigate to="Secretary/Rentals-management" replace={true} />
+      )}
       <Outlet />
     </>
   );

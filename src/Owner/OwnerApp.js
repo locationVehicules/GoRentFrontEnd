@@ -15,7 +15,7 @@ export const OwnerApp = () => {
   return (
     <>
       <SideNavBar userType="owner" userApp="Owner" />
-      {navigate && <Navigate to="Owner/Rent" replace={true} />}
+      {navigate && <Navigate to="Owner/Black-list" replace={true} />}
       <Outlet />
     </>
   );

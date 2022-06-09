@@ -10,13 +10,18 @@ export const RemoveDriver = () => {
     renters.push(renter);
   }
   const [display, setDisplay] = useState(false);
+  const [userID, setUserID] = useState();
 
   const displayConfirmation = () => {
     display ? setDisplay(false) : setDisplay(true);
   };
   const remove = (e) => {
     displayConfirmation();
+    !userID && setUserID(e);
   };
+   const yesFunction = async () => {
+     console.log(`${userID} removed`);
+   };
   return (
     <Main title={"Drivers List"}>
       <div className="container">
@@ -41,6 +46,7 @@ export const RemoveDriver = () => {
         {display && (
           <Confirmation
             displayConfirmation={remove}
+            yesFunction={yesFunction}
             confirmationText={"Are you sure you want to delete this driver ?"}
           />
         )}

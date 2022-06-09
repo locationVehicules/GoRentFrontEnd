@@ -17,7 +17,7 @@ export class NavBar extends Component {
         style={{ background: "var(--body-color1)" }}
       >
         <Link className="navbar-brand" id="public-logo" to={"/"}>
-          GoRent
+            <img src="/logo/logo b.png" style={{ width: "120px" }} />
         </Link>
         <button
           className="navbar-toggler "

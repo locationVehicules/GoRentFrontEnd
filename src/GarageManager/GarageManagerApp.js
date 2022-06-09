@@ -13,8 +13,8 @@ export const GarageManagerApp = () => {
 
   return (
     <>
-      <SideNavBar userType="GarageManager" userApp="GarageManager" />
-      {navigate && <Navigate to="GarageManager/Rent" replace={true} />}
+      <SideNavBar userType="garage_manager" userApp="GarageManager" />
+      {navigate && <Navigate to="GarageManager/Check-in-out" replace={true} />}
       <Outlet />
     </>
   );

@@ -16,16 +16,22 @@ import { SelectedVehicle } from "./User/SelectedVehicle";
 import { Payment } from "./User/Payment";
 
 import { ParkingManagement } from "./GarageManager/ParkingManagement";
+import { CheckInOut } from "./GarageManager/CheckInOut";
 
 import { UserManagement } from "./Admin/UserManagement";
 import { QuestionsManagement } from "./Admin/QuestionsManagement";
 import { VehiclesManagement } from "./Admin/VehiclesManagement";
+import { ToolsManagement } from "./Admin/ToolsManagement";
+import { AgenciesParkings } from "./Admin/AgenciesParkings";
 
 import { IdentifyDriver } from "./Renter/IdentifyDriver";
 import { RemoveDriver } from "./Renter/RemoveDriver";
+import { AddProblem } from "./Renter/AddProblem";
 
 import { BlackList } from "./Owner/BlackList";
 import { ChangePrices } from "./Owner/ChangePrices";
+import { ChangeSalaries } from "./Owner/ChangeSalaries";
+import { ChangeToolPrices } from "./Owner/ChangeToolPrices";
 import { ReclamationManagement } from "./Owner/ReclamationManagement";
 import { Status } from "./Owner/Status";
 
@@ -63,7 +69,7 @@ export const App = () => {
   const [returnLocation, setReturnLocation] = useState("Adrar");
   const [selectedVehicle, setSelectedVehicle] = useState(null);
   const [selectedParking, setSelectedParking] = useState(null);
-  let totalHours = (new Date(returnDate)- new Date(rentDate)) / 36e5;
+  let totalHours = (new Date(returnDate) - new Date(rentDate)) / 36e5;
   const [nbHours, setNbHours] = useState(Math.round(totalHours % 24));
   const [nbDays, setNbDay] = useState(Math.round(totalHours / 24));
   const [total, setTotal] = useState(0);
@@ -127,14 +133,6 @@ export const App = () => {
             <Route exact path="SignUp" element={<SignUp />} />
             <Route path="*" element={<Page404 />} />
             <Route exact path="Admin" element={<AdminApp />}>
-              <Route
-                path="Admin/Rent/SelectedVehicle"
-                element={<SelectedVehicle user={"Admin"} />}
-              />
-              <Route
-                path="Admin/Rent/Payment"
-                element={<Payment user={"Admin"} />}
-              />
               <Route exact path="Admin/Settings" element={<Settings />} />
               <Route
                 path="Admin/User-management"
@@ -147,122 +145,69 @@ export const App = () => {
               />
               <Route
                 exact
+                path="Admin/tools-management"
+                element={<ToolsManagement />}
+              />
+              <Route
+                exact
                 path="Admin/Questions-management"
                 element={<QuestionsManagement />}
+              />
+              <Route
+                exact
+                path="Admin/Agencies-Parkings"
+                element={<AgenciesParkings />}
               />
               <Route
                 exact
                 path="Admin/Contact-administrator"
                 element={<ContactAdministrator />}
               />
-              <Route
-                exact
-                path="Admin/Rent"
-                element={<Rent user={"Admin"} />}
-              />
-              <Route
-                path="Admin/Rent/SearchResult"
-                element={<SearchResult user={"Admin"} />}
-              />
-              <Route
-                exact
-                path="Admin/Rentals"
-                element={<Rentals user={"Admin"} />}
-              />
-              <Route
-                path="Admin/Rentals/MyContract"
-                element={<MyContract user={"Admin"} />}
-              />
-              <Route path="*" element={<Page404 />} />
-            </Route>
-            <Route exact path="GarageManager" element={<GarageManagerApp />}>
-              <Route
-                path="GarageManager/Rent/SelectedVehicle"
-                element={<SelectedVehicle user={"GarageManager"} />}
-              />
-              <Route
-                path="GarageManager/Rent/Payment"
-                element={<Payment user={"GarageManager"} />}
-              />
-              <Route
-                exact
-                path="GarageManager/Rent"
-                element={<Rent user={"GarageManager"} />}
-              />
-              <Route
-                path="GarageManager/Rent/SearchResult"
-                element={<SearchResult user={"GarageManager"} />}
-              />
-              <Route
-                exact
-                path="GarageManager/Settings"
-                element={<Settings />}
-              />
-              <Route
-                exact
-                path="GarageManager/Contact-administrator"
-                element={<ContactAdministrator />}
-              />
-              <Route
-                exact
-                path="GarageManager/Rentals"
-                element={<Rentals user={"GarageManager"} />}
-              />
-              <Route
-                exact
-                path="GarageManager/Parking-management"
-                element={<ParkingManagement />}
-              />
-              <Route
-                path="GarageManager/Rentals/MyContract"
-                element={<MyContract user={"GarageManager"} />}
-              />
               <Route path="*" element={<Page404 />} />
             </Route>
             <Route exact path="Owner" element={<OwnerApp />}>
-              <Route
-                path="Owner/Rent/SelectedVehicle"
-                element={<SelectedVehicle user={"Owner"} />}
-              />
-              <Route
-                path="Owner/Rent/Payment"
-                element={<Payment user={"Owner"} />}
-              />
               <Route path="Owner/Black-list" element={<BlackList />} />
               <Route
                 path="Owner/Reclamation-management"
                 element={<ReclamationManagement />}
               />
               <Route path="Owner/Change-prices" element={<ChangePrices />} />
+              <Route
+                path="Owner/Change-tools-prices"
+                element={<ChangeToolPrices />}
+              />
+              <Route
+                path="Owner/Change-Salaries"
+                element={<ChangeSalaries />}
+              />
               <Route path="Owner/Status" element={<Status />} />
-
-              <Route
-                exact
-                path="Owner/Rent"
-                element={<Rent user={"Owner"} />}
-              />
-              <Route
-                path="Owner/Rent/SearchResult"
-                element={<SearchResult user={"Owner"} />}
-              />
-              <Route
-                exact
-                path="Owner/Rentals"
-                element={<Rentals user={"Owner"} />}
-              />
-              <Route
-                exact
-                path="Owner/Contact-administrator"
-                element={<ContactAdministrator />}
-              />
               <Route exact path="Owner/Settings" element={<Settings />} />
+              <Route path="*" element={<Page404 />} />
+            </Route>
+            <Route exact path="GarageManager" element={<GarageManagerApp />}>
               <Route
-                path="Owner/Rentals/MyContract"
-                element={<MyContract user={"Owner"} />}
+                exact
+                path="GarageManager/Change-state"
+                element={<ParkingManagement />}
+              />
+              <Route
+                exact
+                path="GarageManager/Check-in-out"
+                element={<CheckInOut />}
+              />
+              <Route
+                exact
+                path="GarageManager/Settings"
+                element={<Settings />}
               />
               <Route path="*" element={<Page404 />} />
             </Route>
             <Route exact path="Renter" element={<RenterApp />}>
+              <Route path="Renter/Rent" element={<Rent user={"Renter"} />} />
+              <Route
+                path="Renter/Rent/SearchResult"
+                element={<SearchResult user={"Renter"} />}
+              />
               <Route
                 path="Renter/Rent/SelectedVehicle"
                 element={<SelectedVehicle user={"Renter"} />}
@@ -271,14 +216,17 @@ export const App = () => {
                 path="Renter/Rent/Payment"
                 element={<Payment user={"Renter"} />}
               />
-              <Route path="Renter/Rent" element={<Rent user={"Renter"} />} />
-              <Route
-                path="Renter/Rent/SearchResult"
-                element={<SearchResult user={"Renter"} />}
-              />
               <Route
                 path="Renter/Rentals"
                 element={<Rentals user={"Renter"} />}
+              />
+              <Route
+                path="Renter/add-problem"
+                element={<AddProblem user={"Renter"} />}
+              />
+              <Route
+                path="Renter/Rentals/MyContract"
+                element={<MyContract user={"Renter"} />}
               />
               <Route
                 path="Renter/Identify-driver"
@@ -290,60 +238,32 @@ export const App = () => {
                 element={<ContactAdministrator />}
               />
               <Route path="Renter/Settings" element={<Settings />} />
-              <Route
-                path="Renter/Rentals/MyContract"
-                element={<MyContract user={"Renter"} />}
-              />
               <Route path="*" element={<RenterApp />} />
             </Route>
             <Route exact path="Secretary" element={<SecretariatApp />}>
               <Route
-                path="Secretary/Rent/SelectedVehicle"
-                element={<SelectedVehicle user={"Secretary"} />}
-              />
-              <Route
-                path="Secretary/Rent/Payment"
-                element={<Payment user={"Secretary"} />}
-              />
-              <Route
                 path="Secretary/Rentals-management"
                 element={<RentalsManagement />}
+              />
+              <Route
+                path="Secretary/Rentals-management/Contract"
+                element={<Contract user={"Secretary"} />}
               />
               <Route
                 path="Secretary/User-management"
                 element={<UserManagement />}
               />
               <Route
+                exact
+                path="Secretary/tools-management"
+                element={<ToolsManagement />}
+              />
+              <Route
                 path="Secretary/Vehicles-management"
                 element={<VehiclesManagement />}
               />
-              <Route path="Secretary/Black-list" element={<BlackList />} />
-              <Route
-                path="Secretary/Rent"
-                element={<Rent user={"Secretary"} />}
-              />
-              <Route
-                path="Secretary/Rentals"
-                element={<Rentals user={"Secretary"} />}
-              />
-              <Route
-                path="Secretary/Contact-administrator"
-                element={<ContactAdministrator />}
-              />
               <Route path="Secretary/Settings" element={<Settings />} />
               <Route path="*" element={<SecretariatApp />} />
-              <Route
-                path="Secretary/Rentals-management/Contract"
-                element={<Contract user={"Secretary"} />}
-              />
-              <Route
-                path="Secretary/Rentals/MyContract"
-                element={<MyContract user={"Secretary"} />}
-              />
-              <Route
-                path="Secretary/Rent/SearchResult"
-                element={<SearchResult user={"Secretary"} />}
-              />
             </Route>
           </Routes>
         </Router>

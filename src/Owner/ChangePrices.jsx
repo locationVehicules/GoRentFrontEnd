@@ -39,7 +39,7 @@ export const ChangePrices = () => {
   };
 
   return (
-    <Main title={"Change Prices"}>
+    <Main title={"Change Vehicules Prices"}>
       <div id="search" className="d-flex m-1 mx-lg-2 px-3">
         <form className="d-flex">
           <i className="bi bi-search fs-5"></i>

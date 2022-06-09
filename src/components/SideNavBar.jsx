@@ -3,148 +3,310 @@ import { Logo } from "./Logo";
 import { Navitem } from "./navitem";
 import "../css/global.css";
 
-export const SideNavBar = ({ userType, userApp}) => {
+export const SideNavBar = ({ userType, userApp }) => {
   const defineUser = () => {
     let userNavItems = [];
     switch (userType) {
-      case "renterP":
-        userNavItems = [
-          false, // 0
-          false, // 1
-          false, // 2
-          false, // 3
-          false, // 4
-          false, // 5
-          false, // 6
-          false, // 7
-          false, // 8
-          true, // 9
-          true, // 10
-          false, // 11
-          false, // 12
-          true, // 13
-          true, // 14
-          true, // 15
-        ];
-        break;
-      case "renterE":
-        userNavItems = [
-          false, // 0
-          false, // 1
-          false, // 2
-          false, // 3
-          false, // 4
-          false, // 5
-          false, // 6
-          false, // 7
-          false, // 8
-          true, // 9
-          true, // 10
-          true, // 11
-          true, // 12
-          true, // 13
-          true, // 14
-          true, // 15
-        ];
-        break;
-      case "GarageManager":
-        userNavItems = [
-          false, // 0
-          false, // 1
-          false, // 2
-          false, // 3
-          false, // 4
-          false, // 5
-          false, // 6
-          false, // 7
-          true, // 8
-          true, // 9
-          true, // 10
-          false, // 11
-          false, // 12
-          true, // 13
-          true, // 14
-          true, // 15
-        ];
-        break;
       case "admin":
         userNavItems = [
-          false, // 0
-          true, // 1
-          true, // 2
-          false, // 3
-          true, // 4
-          false, // 5
-          false, // 6
-          false, // 7
-          false, // 8
-          true, // 9
-          true, // 10
-          false, // 11
-          false, // 12
-          true, // 13
-          true, // 14
-          true, // 15
+          {
+            href: `${userApp}/User-management`,
+            i_class: "bi bi-people fs-4",
+            span_text: "User management",
+          },
+          {
+            href: `${userApp}/Vehicles-management`,
+            i_class: "bi bi-truck fs-4",
+            span_text: "Vehicles management",
+          },
+          {
+            href: `${userApp}/Tools-management`,
+            i_class: "bi bi-wrench-adjustable-circle fs-4",
+            span_text: "Tools management",
+          },
+          {
+            href: `${userApp}/Questions-management`,
+            i_class: "bi bi-question-square fs-4",
+            span_text: "Questions management",
+          },
+          {
+            href: `${userApp}/Agencies-Parkings`,
+            i_class: "bi bi-building fs-4",
+            span_text: "Agencyies and Parkings",
+          },
+          {
+            href: `${userApp}/Settings`,
+            i_class: "bi bi-gear fs-4",
+            span_text: "Settings",
+          },
+          {
+            href: "/",
+            i_class: "bi bi-box-arrow-right fs-4",
+            span_text: "Logout",
+          },
         ];
         break;
       case "owner":
         userNavItems = [
-          false, // 0
-          false, // 1
-          false, // 2
-          true, // 3
-          false, // 4
-          true, // 5
-          true, // 6
-          true, // 7
-          false, // 8
-          true, // 9
-          true, // 10
-          false, // 11
-          false, // 12
-          true, // 13
-          true, // 14
-          true, // 15
+          {
+            href: `${userApp}/Black-list`,
+            i_class: "bi bi-person-x fs-4",
+            span_text: "Black list",
+          },
+          {
+            href: `${userApp}/Reclamation-management`,
+            i_class: "bi bi-question-square fs-4",
+            span_text: "Reclamation management",
+          },
+          {
+            href: `${userApp}/Change-prices`,
+            i_class: "bi bi-currency-exchange fs-4",
+            span_text: "Change vehicles prices",
+          },
+          {
+            href: `${userApp}/Change-tools-prices`,
+            i_class: "bi bi-currency-exchange fs-4",
+            span_text: "Change tools prices",
+          },
+          {
+            href: `${userApp}/Change-Salaries`,
+            i_class: "bi bi-cash-coin fs-4",
+            span_text: "Change salaries",
+          },
+          {
+            href: `${userApp}/Status`,
+            i_class: "bi bi-command fs-4",
+            span_text: "Status",
+          },
+          {
+            href: `${userApp}/Settings`,
+            i_class: "bi bi-gear fs-4",
+            span_text: "Settings",
+          },
+          {
+            href: "/",
+            i_class: "bi bi-box-arrow-right fs-4",
+            span_text: "Logout",
+          },
         ];
         break;
-      case "secretariat":
+      case "Secretary":
         userNavItems = [
-          true, // 0
-          true, // 1
-          true, // 2
-          true, // 3
-          false, // 4
-          false, // 5
-          false, // 6
-          false, // 7
-          false, // 8
-          true, // 9
-          true, // 10
-          false, // 11
-          false, // 12
-          true, // 13
-          true, // 14
-          true, // 15
+          {
+            href: `${userApp}/Rentals-management`,
+            i_class: "bi bi-receipt-cutoff fs-4",
+            span_text: "Rentals management",
+          },
+          {
+            href: `${userApp}/User-management`,
+            i_class: "bi bi-people fs-4",
+            span_text: "User management",
+          },
+          {
+            href: `${userApp}/Vehicles-management`,
+            i_class: "bi bi-truck fs-4",
+            span_text: "Vehicles management",
+          },
+          {
+            href: `${userApp}/Tools-management`,
+            i_class: "bi bi-wrench-adjustable-circle fs-4",
+            span_text: "Tools management",
+          },
+          {
+            href: `${userApp}/Settings`,
+            i_class: "bi bi-gear fs-4",
+            span_text: "Settings",
+          },
+          {
+            href: "/",
+            i_class: "bi bi-box-arrow-right fs-4",
+            span_text: "Logout",
+          },
+        ];
+        break;
+      case "renter private":
+        userNavItems = [
+          {
+            href: `${userApp}/Rent`,
+            i_class: "bi bi-bicycle fs-4",
+            span_text: "Rent",
+          },
+          {
+            href: `${userApp}/Rentals`,
+            i_class: "bi bi-receipt fs-4",
+            span_text: "Rentals",
+          },
+          {
+            href: `${userApp}/Contact-administrator`,
+            i_class: "bi bi-envelope fs-4",
+            span_text: "Contact administrator",
+          },
+          {
+            href: `${userApp}/Settings`,
+            i_class: "bi bi-gear fs-4",
+            span_text: "Settings",
+          },
+          {
+            href: "/",
+            i_class: "bi bi-box-arrow-right fs-4",
+            span_text: "Logout",
+          },
+        ];
+        break;
+      case "renter private driver":
+        userNavItems = [
+          {
+            href: `${userApp}/Rent`,
+            i_class: "bi bi-bicycle fs-4",
+            span_text: "Rent",
+          },
+          {
+            href: `${userApp}/Rentals`,
+            i_class: "bi bi-receipt fs-4",
+            span_text: "Rentals",
+          },
+          {
+            href: `${userApp}/add-problem`,
+            i_class: "bi bi-exclamation-circle fs-4",
+            span_text: "Add probelm",
+          },
+          {
+            href: `${userApp}/Contact-administrator`,
+            i_class: "bi bi-envelope fs-4",
+            span_text: "Contact administrator",
+          },
+          {
+            href: `${userApp}/Settings`,
+            i_class: "bi bi-gear fs-4",
+            span_text: "Settings",
+          },
+          {
+            href: "/",
+            i_class: "bi bi-box-arrow-right fs-4",
+            span_text: "Logout",
+          },
+        ];
+        break;
+      case "driver":
+        userNavItems = [
+          {
+            href: `${userApp}/Rentals`,
+            i_class: "bi bi-receipt fs-4",
+            span_text: "Rentals",
+          },
+          {
+            href: `${userApp}/add-problem`,
+            i_class: "bi bi-exclamation-circle fs-4",
+            span_text: "Add problem",
+          },
+          {
+            href: `${userApp}/Contact-administrator`,
+            i_class: "bi bi-envelope fs-4",
+            span_text: "Contact administrator",
+          },
+          {
+            href: `${userApp}/Settings`,
+            i_class: "bi bi-gear fs-4",
+            span_text: "Settings",
+          },
+          {
+            href: "/",
+            i_class: "bi bi-box-arrow-right fs-4",
+            span_text: "Logout",
+          },
+        ];
+        break;
+      case "renter business":
+        userNavItems = [
+          {
+            href: `${userApp}/Rent`,
+            i_class: "bi bi-bicycle fs-4",
+            span_text: "Rent",
+          },
+          {
+            href: `${userApp}/Rentals`,
+            i_class: "bi bi-receipt fs-4",
+            span_text: "Rentals",
+          },
+          {
+            href: `${userApp}/Identify-driver`,
+            i_class: "bi bi-person-plus fs-4",
+            span_text: "Identify driver",
+          },
+          {
+            href: `${userApp}/Drivers-list`,
+            i_class: "bi bi-people fs-4",
+            span_text: "Drivers list",
+          },
+          {
+            href: `${userApp}/Contact-administrator`,
+            i_class: "bi bi-envelope fs-4",
+            span_text: "Contact administrator",
+          },
+          {
+            href: `${userApp}/Settings`,
+            i_class: "bi bi-gear fs-4",
+            span_text: "Settings",
+          },
+          {
+            href: "/",
+            i_class: "bi bi-box-arrow-right fs-4",
+            span_text: "Logout",
+          },
+        ];
+
+        break;
+      case "garage_manager":
+        userNavItems = [
+          {
+            href: `${userApp}/Check-in-out`,
+            i_class: "bi bi-arrow-left-right fs-4",
+            span_text: "Check in/out",
+          },
+          {
+            href: `${userApp}/Change-state`,
+            i_class: "bi bi-file-ppt fs-4",
+            span_text: "Change state",
+          },
+          {
+            href: `${userApp}/Settings`,
+            i_class: "bi bi-gear fs-4",
+            span_text: "Settings",
+          },
+          {
+            href: "/",
+            i_class: "bi bi-box-arrow-right fs-4",
+            span_text: "Logout",
+          },
         ];
         break;
       default:
         userNavItems = [
-          false, // 0
-          false, // 1
-          false, // 2
-          false, // 3
-          false, // 4
-          false, // 5
-          false, // 6
-          false, // 7
-          false, // 8
-          true, // 9
-          true, // 10
-          false, // 11
-          false, // 12
-          true, // 13
-          true, // 14
-          true, // 15
+          {
+            href: `${userApp}/Rent`,
+            i_class: "bi bi-bicycle fs-4",
+            span_text: "Rent",
+          },
+          {
+            href: `${userApp}/Rentals`,
+            i_class: "bi bi-receipt fs-4",
+            span_text: "Rentals",
+          },
+          {
+            href: `${userApp}/Contact-administrator`,
+            i_class: "bi bi-envelope fs-4",
+            span_text: "Contact administrator",
+          },
+          {
+            href: `${userApp}/Settings`,
+            i_class: "bi bi-gear fs-4",
+            span_text: "Settings",
+          },
+          {
+            href: "/",
+            i_class: "bi bi-box-arrow-right fs-4",
+            span_text: "Logout",
+          },
         ];
         break;
     }
@@ -157,10 +319,10 @@ export const SideNavBar = ({ userType, userApp}) => {
       id="sidebar"
     >
       <div className="container flex-lg-column mb-auto ">
-        <Logo/>
+        <Logo />
         <div className="collapse navbar-collapse " id="side-navbar">
           <ul className="navbar-nav flex-column mb-auto mt-2 mb-lg-0 navbar-nav-side">
-            <Navitem userNavItems={defineUser()} userApp={userApp} />
+            <Navitem userNavItems={defineUser()} />
           </ul>
         </div>
       </div>

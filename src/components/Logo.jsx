@@ -1,11 +1,16 @@
 import React from "react";
 
-export const Logo = (userApp) => {
+export const Logo = () => {
   return (
     <>
       <a href="index" className="d-block text-decoration-none">
-        <span id="logo" className="brand fs-1 fw-bold">
-          LOGO
+        <span className="brand fs-1 mt-1 fw-bold">
+          <img
+            id="logo"
+            src="/logo/logo w.png"
+            style={{ width: "120px" }}
+            alt="GoRent logo"
+          />
         </span>
       </a>
       <button

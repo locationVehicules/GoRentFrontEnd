@@ -1,7 +1,6 @@
 import React, { useState, useRef, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Main } from "../components/Main";
-import { Confirmation } from "../Owner/BlackList";
 import { PaimentInfos } from "./GetInfos";
 import { Reservation } from "../GetSetData/Contexts";
 import ReservationAPIs from "../GetSetData/useAPIs/ReservationAPIs";
@@ -230,12 +229,6 @@ export const MyContract = ({ user }) => {
       </div>
 
       {displaySignPad && <MySignaturePad AddSign={AddSign} />}
-      {displayCancel && (
-        <Confirmation
-          displayConfirmation={displayConfirmation}
-          confirmationText={"Are you sure ?"}
-        />
-      )}
       {renew && <RenewFrom displayRenew={displayRenew} />}
     </Main>
   );

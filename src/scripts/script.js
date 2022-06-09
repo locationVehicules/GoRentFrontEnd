@@ -9,9 +9,10 @@ export const NavToggle = () => {
   main.classList.toggle("col-lg-11");
 
   let logo = document.getElementById("logo");
-  logo.classList.toggle("fs-4");
-  logo.classList.toggle("fs-1");
-
+  sidebar.classList.contains("col-lg-1")
+    ? (logo.style.width = "70px")
+    : (logo.style.width = "120px");
+  
   let item = document.querySelectorAll(".mainNav .item");
   for (let i = 0; i < item.length; i++) {
     item[i].classList.toggle("d-lg-none");

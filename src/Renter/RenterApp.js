@@ -3,8 +3,6 @@ import { SideNavBar } from "../components/SideNavBar";
 import React, { useEffect, useState } from "react";
 
 export const RenterApp = () => {
-  // !Enterprise ? userType=renterP : userType=renterE
-
   const sideBar = document.getElementById("sidebar");
   const [navigate, setNavigate] = useState();
 
@@ -14,7 +12,7 @@ export const RenterApp = () => {
 
   return (
     <>
-      <SideNavBar userType="renterE" userApp="Renter" />
+      <SideNavBar userType="renter private driver" userApp="Renter" />
       {navigate && <Navigate to="Renter/Rent" replace={true} />}
       <Outlet />
     </>
