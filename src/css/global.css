@@ -120,13 +120,22 @@ body {
   color: var(--big-title-color);
 }
 
-.bi-bell-fill {
+.bi-bell-fill , .bi-file-person{
   color: var(--bg_icon_color) !important;
 }
-
 .bi-bell-fill span {
   font-size: small !important;
   background-color: var(--noti_color_2);
+}
+.bi-bell-fill:hover{
+  color: var(--btn_color1) !important;
+}
+.bi-file-person{
+  transition: transform .7s ease-in-out;
+}
+.bi-file-person:hover{
+  color: var(--btn_color1) !important;
+  transform: rotateY(360deg) translateX(-1px) translateX(1px);
 }
 
 .dropdown-menu {

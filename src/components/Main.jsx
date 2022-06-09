@@ -13,6 +13,35 @@ export const Main = (props) => {
   const [notiNum, setNotiNum] = useState(0);
   const [displayNoti, setDisplayNoti] = useState(false);
 
+  const ProfilToggle = () => {
+    const type = JSON.parse(localStorage.getItem("ndtype"));
+    const typeActive = JSON.parse(localStorage.getItem("ndtypeActive"));
+    if (typeActive) {
+          localStorage.setItem("ndtypeActive", JSON.stringify(false));
+          window.open("http://localhost:3000/Renter", "_self");
+    } else {
+      switch (type) {
+        case "admin":
+          localStorage.setItem("ndtypeActive", JSON.stringify(true));
+          window.open("http://localhost:3000/Admin", "_self");
+          break;
+        case "owner":
+          localStorage.setItem("ndtypeActive", JSON.stringify(true));
+          window.open("http://localhost:3000/Owner", "_self");
+          break;
+        case "secretary":
+          localStorage.setItem("ndtypeActive", JSON.stringify(true));
+          window.open("http://localhost:3000/Secretary", "_self");
+          break;
+        case "garage_manager":
+          localStorage.setItem("ndtypeActive", JSON.stringify(true));
+          window.open("http://localhost:3000/GarageManager", "_self");
+          break;
+        default:
+          break;
+      }
+    }
+  };
   useEffect(() => {
     notiNum !== 0 ? setDisplayNoti(true) : setDisplayNoti(false);
   }, [notiNum]);
@@ -31,13 +60,22 @@ export const Main = (props) => {
           <button
             id="navbar-toggler-btn"
             type="button"
-            onClick={NavToggle.bind()}
+            onClick={() => NavToggle()}
           >
             <i className="bi bi-list fs-1"></i>
           </button>
           <h2> {props.title}</h2>
         </nav>
         <div className="w-100 d-flex justify-content-end">
+          <div className="navbar-nav d-flex justify-content-center">
+            <button
+              className="btn p-3"
+              type="button"
+              onClick={ProfilToggle.bind()}
+            >
+              <i className="bi bi-file-person fs-4 position-relative d-flex "></i>
+            </button>
+          </div>
           <div className="navbar-nav d-flex flex-column btn-group">
             <button
               className="btn p-3"

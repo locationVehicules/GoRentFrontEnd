@@ -34,16 +34,6 @@ export const SideNavBar = ({ userType, userApp }) => {
             i_class: "bi bi-building fs-4",
             span_text: "Agencyies and Parkings",
           },
-          {
-            href: `${userApp}/Settings`,
-            i_class: "bi bi-gear fs-4",
-            span_text: "Settings",
-          },
-          {
-            href: "/",
-            i_class: "bi bi-box-arrow-right fs-4",
-            span_text: "Logout",
-          },
         ];
         break;
       case "owner":
@@ -78,19 +68,9 @@ export const SideNavBar = ({ userType, userApp }) => {
             i_class: "bi bi-command fs-4",
             span_text: "Status",
           },
-          {
-            href: `${userApp}/Settings`,
-            i_class: "bi bi-gear fs-4",
-            span_text: "Settings",
-          },
-          {
-            href: "/",
-            i_class: "bi bi-box-arrow-right fs-4",
-            span_text: "Logout",
-          },
         ];
         break;
-      case "Secretary":
+      case "secretary":
         userNavItems = [
           {
             href: `${userApp}/Rentals-management`,
@@ -111,16 +91,6 @@ export const SideNavBar = ({ userType, userApp }) => {
             href: `${userApp}/Tools-management`,
             i_class: "bi bi-wrench-adjustable-circle fs-4",
             span_text: "Tools management",
-          },
-          {
-            href: `${userApp}/Settings`,
-            i_class: "bi bi-gear fs-4",
-            span_text: "Settings",
-          },
-          {
-            href: "/",
-            i_class: "bi bi-box-arrow-right fs-4",
-            span_text: "Logout",
           },
         ];
         break;
@@ -168,7 +138,7 @@ export const SideNavBar = ({ userType, userApp }) => {
           {
             href: `${userApp}/add-problem`,
             i_class: "bi bi-exclamation-circle fs-4",
-            span_text: "Add probelm",
+            span_text: "Repport probelm",
           },
           {
             href: `${userApp}/Contact-administrator`,
@@ -267,16 +237,6 @@ export const SideNavBar = ({ userType, userApp }) => {
             href: `${userApp}/Change-state`,
             i_class: "bi bi-file-ppt fs-4",
             span_text: "Change state",
-          },
-          {
-            href: `${userApp}/Settings`,
-            i_class: "bi bi-gear fs-4",
-            span_text: "Settings",
-          },
-          {
-            href: "/",
-            i_class: "bi bi-box-arrow-right fs-4",
-            span_text: "Logout",
           },
         ];
         break;

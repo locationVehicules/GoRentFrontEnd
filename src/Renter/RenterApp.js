@@ -9,7 +9,11 @@ export const RenterApp = () => {
   useEffect(() => {
     sideBar === null ? setNavigate(true) : setNavigate(false);
   }, [sideBar]);
+  useEffect(() => {
+    localStorage.setItem("ndtype", JSON.stringify("owner"));
+  }, []);
 
+  
   return (
     <>
       <SideNavBar userType="renter private driver" userApp="Renter" />

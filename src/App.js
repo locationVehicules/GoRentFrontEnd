@@ -133,7 +133,6 @@ export const App = () => {
             <Route exact path="SignUp" element={<SignUp />} />
             <Route path="*" element={<Page404 />} />
             <Route exact path="Admin" element={<AdminApp />}>
-              <Route exact path="Admin/Settings" element={<Settings />} />
               <Route
                 path="Admin/User-management"
                 element={<UserManagement />}
@@ -158,11 +157,6 @@ export const App = () => {
                 path="Admin/Agencies-Parkings"
                 element={<AgenciesParkings />}
               />
-              <Route
-                exact
-                path="Admin/Contact-administrator"
-                element={<ContactAdministrator />}
-              />
               <Route path="*" element={<Page404 />} />
             </Route>
             <Route exact path="Owner" element={<OwnerApp />}>
@@ -181,7 +175,6 @@ export const App = () => {
                 element={<ChangeSalaries />}
               />
               <Route path="Owner/Status" element={<Status />} />
-              <Route exact path="Owner/Settings" element={<Settings />} />
               <Route path="*" element={<Page404 />} />
             </Route>
             <Route exact path="GarageManager" element={<GarageManagerApp />}>
@@ -195,11 +188,7 @@ export const App = () => {
                 path="GarageManager/Check-in-out"
                 element={<CheckInOut />}
               />
-              <Route
-                exact
-                path="GarageManager/Settings"
-                element={<Settings />}
-              />
+
               <Route path="*" element={<Page404 />} />
             </Route>
             <Route exact path="Renter" element={<RenterApp />}>
@@ -262,7 +251,6 @@ export const App = () => {
                 path="Secretary/Vehicles-management"
                 element={<VehiclesManagement />}
               />
-              <Route path="Secretary/Settings" element={<Settings />} />
               <Route path="*" element={<SecretariatApp />} />
             </Route>
           </Routes>
