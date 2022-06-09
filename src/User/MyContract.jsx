@@ -47,9 +47,11 @@ export const MyContract = ({ user }) => {
     renew ? setRenewl(false) : setRenewl(true);
   };
 
-  const Download = () => {
-    window.open(`http://127.0.0.1:8000${contartPath}`, "_blank");
-    window.open(`http://127.0.0.1:8000${billPath}`, "_blank");
+  const DownloadContart = () => {
+    window.open(`http://127.0.0.1:8000${contartPath}`, "_blank").focus();
+  };
+  const DownloadBill = () => {
+    window.open(`http://127.0.0.1:8000${billPath}`, "_blank").focus();
   };
   return (
     <Main title={"Rentals Management"}>
@@ -88,6 +90,31 @@ export const MyContract = ({ user }) => {
             />
           ))}
         </Document>
+        <div className="d-flex justify-content-end flex-column flex-sm-row p-lg-3">
+          <div className="d-flex justify-content-end flex-column flex-sm-row p-lg-3">
+            <div className="d-flex flex-wrap">
+              <button
+                type="button"
+                className="btn mx-lg-2 m-1 d-flex justify-content-center align-items-center"
+                style={{
+                  borderRadius: "30px",
+                  boxShadow: "0px 4px 18px rgba(221, 221, 221, 0.51)",
+                  background: "var(--btn_color1)",
+                  color: "var(--nav_font_color)",
+                }}
+                onClick={() => DownloadContart()}
+              >
+                <i
+                  className="bi bi-download fs-6"
+                  style={{
+                    color: "white",
+                  }}
+                ></i>
+                Download Contart
+              </button>
+            </div>
+          </div>
+        </div>
         {!sameDriver ? (
           <div className="d-flex justify-content-end flex-column flex-sm-row p-lg-3">
             <div className="d-flex flex-wrap">
@@ -147,6 +174,31 @@ export const MyContract = ({ user }) => {
                 />
               ))}
             </Document>
+            <div className="d-flex justify-content-end flex-column flex-sm-row p-lg-3">
+              <div className="d-flex justify-content-end flex-column flex-sm-row p-lg-3">
+                <div className="d-flex flex-wrap">
+                  <button
+                    type="button"
+                    className="btn mx-lg-2 m-1 d-flex justify-content-center align-items-center"
+                    style={{
+                      borderRadius: "30px",
+                      boxShadow: "0px 4px 18px rgba(221, 221, 221, 0.51)",
+                      background: "var(--btn_color1)",
+                      color: "var(--nav_font_color)",
+                    }}
+                    onClick={() => DownloadBill()}
+                  >
+                    <i
+                      className="bi bi-download fs-6"
+                      style={{
+                        color: "white",
+                      }}
+                    ></i>
+                    Download bill
+                  </button>
+                </div>
+              </div>
+            </div>
 
             <div className="d-flex justify-content-end flex-column flex-sm-row p-lg-3">
               <div className="d-flex justify-content-end flex-column flex-sm-row p-lg-3">
@@ -169,25 +221,6 @@ export const MyContract = ({ user }) => {
                       }}
                     ></i>
                     Renew reservation
-                  </button>
-                  <button
-                    type="button"
-                    className="btn mx-lg-2 m-1 d-flex justify-content-center align-items-center"
-                    style={{
-                      borderRadius: "30px",
-                      boxShadow: "0px 4px 18px rgba(221, 221, 221, 0.51)",
-                      background: "var(--btn_color1)",
-                      color: "var(--nav_font_color)",
-                    }}
-                    onClick={() => Download()}
-                  >
-                    <i
-                      className="bi bi-download fs-6"
-                      style={{
-                        color: "white",
-                      }}
-                    ></i>
-                    Download
                   </button>
                 </div>
               </div>
@@ -219,7 +252,7 @@ export const MySignaturePad = ({ AddSign }) => {
 
   const submit = () => {
     if (context.driver[0] !== "") {
-      context.signatureR[1](sigPad.current);
+      context.signatureR[1](sigPad.current.toDataURL("image/png"));
       context.stateR[1]("driver not yet signed");
       getDriverID(context.driver[0]);
     } else {
@@ -267,12 +300,22 @@ export const MySignaturePad = ({ AddSign }) => {
     );
   };
   const getContract = async () => {
-    let data = {
-      reservation: reservation,
-      signatureDriver: context.signatureD[0],
-      signatureRenter: context.signatureR[0],
-      type: "new",
-    };
+    let data;
+    if (context.signatureD[0] === null) {
+      data = {
+        reservation: reservation,
+        signatureRenter: context.signatureR[0],
+        type: "new",
+      };
+    } else {
+      data = {
+        reservation: reservation,
+        signatureDriver: context.signatureD[0],
+        signatureRenter: context.signatureR[0],
+        type: "new",
+      };
+    }
+    console.log(data);
     await ContartAPIs.AddContrat(data).then((data) => setContract(data));
   };
   const pay = async () => {

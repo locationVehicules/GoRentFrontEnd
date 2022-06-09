@@ -90,6 +90,13 @@ export default class AdministrationAPIs {
       .catch((err) => console.log(err));
   }
 
+  static DriverList() {
+    return fetch(`http://127.0.0.1:8000/staff/DriverList/`)
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
   static DriverDetail(id) {
     return fetch(`http://127.0.0.1:8000/staff/DriverDetail/${id}`)
       .then((response) => response.json())

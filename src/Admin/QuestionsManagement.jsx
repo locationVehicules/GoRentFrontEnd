@@ -15,7 +15,7 @@ export const QuestionsManagement = () => {
     await QuestionAPIs.QuestionList().then((data) => {
       setquestions(data);
     });
-    setDisplayTable(true);
+    questions && setDisplayTable(true);
   };
 
   const submitReplay = async (id, data) => {
@@ -28,7 +28,7 @@ export const QuestionsManagement = () => {
     if (displayTable) {
       questions.map((q) => questionsList.push([q.id, q.question, q.response]));
     }
-  }, [displayTable]);
+  }, [questions]);
 
   const replay = (QuesId) => {
     questions.map((q) => q.id == QuesId && setSelectedquestions(q));
@@ -37,7 +37,7 @@ export const QuestionsManagement = () => {
   return (
     <Main title={"Questions Management"}>
       <div className="container-fluid">
-        {displayTable && (
+        {displayTable ? (
           <AdministrationTable
             tableTitle={"Questions"}
             headerList={["Questions ID", "Questions"]}
@@ -45,6 +45,12 @@ export const QuestionsManagement = () => {
             btnValue={"Replay"}
             functionBtn={replay}
           />
+        ) : (
+          <div className="container p-3 my-3 table-con">
+            <h2 className="d-flex justify-content-center">
+              There is no questions
+            </h2>
+          </div>
         )}
         {display && (
           <ReplayForm

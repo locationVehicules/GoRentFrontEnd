@@ -5,6 +5,7 @@ import { DriverInfos, PaimentInfos } from "./GetInfos";
 import { MySignaturePad } from "./MyContract";
 import { Reservation } from "../GetSetData/Contexts";
 import AdministrationAPIs from "../GetSetData/useAPIs/AdministrationAPIs";
+import ReservationAPIs from "../GetSetData/useAPIs/ReservationAPIs";
 
 export const Payment = ({ user }) => {
   const context = useContext(Reservation);
@@ -24,6 +25,7 @@ export const Payment = ({ user }) => {
   };
   const Confirm = () => {
     if (context.paymentMethod[0] === "On Spot") {
+      context.stateR[1]("not payed");
       setText("Pay location to cuntune reservation");
       displayConfirmation();
     } else {
@@ -64,22 +66,45 @@ export const Payment = ({ user }) => {
 };
 
 export const Confirmation = ({ user, text }) => {
+  const context = useContext(Reservation);
   const [onSpot, setOnSpot] = useState(false);
   const [agency, setAgency] = useState(false);
+  const [driverS, setDriverS] = useState(null);
+  const [reservation, setReservation] = useState(null);
+  const [driver, setDriver] = useState(null);
+
   useEffect(() => {
     if (text === "Pay location to cuntune reservation") {
-      getAgency();
+      getDriverID(7); // get id from context
       setOnSpot(true);
       console.log(agency);
     }
     if (text === "Your reservation passed successfully!") {
+      !context.signatureD[0] &&
+        setDriverS("Wait driver signature to get a validated contract");
       setOnSpot(false);
     }
   }, []);
-  const context = useContext(Reservation);
+  useEffect(() => {
+    driver && reserve();
+  }, [driver]);
+  useEffect(() => {
+    reservation && getAgency();
+  }, [reservation]);
+
   const getAgency = async () => {
     await AdministrationAPIs.AgencyDetail(context.rentLocation[0]).then(
       (data) => setAgency(data)
+    );
+  };
+  const reserve = async () => {
+    await ReservationAPIs.reservationCarOnLigne(context, driver).then((data) =>
+      setReservation(data.id)
+    );
+  };
+  const getDriverID = async (userId) => {
+    await AdministrationAPIs.DriverDetail(userId).then((data) =>
+      setDriver(data.id)
     );
   };
   return (
@@ -105,7 +130,12 @@ export const Confirmation = ({ user, text }) => {
             <p className="d-flex pt-2 px-3 justify-content-center fs-5">
               {text}
             </p>
-
+            {driverS && (
+              <p className="d-flex pt-2 px-3 justify-content-center align-items-center text-warning fs-6">
+                <i className="bi bi-exclamation-triangle text-warning px-1 "></i>
+                {driverS}
+              </p>
+            )}
             {agency && (
               <div className="row">
                 <div className="col-md-6">

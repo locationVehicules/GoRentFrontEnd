@@ -3,6 +3,7 @@ import Select from "react-select";
 import { Reservation } from "../GetSetData/Contexts";
 import { Elements, CardElement } from "@stripe/react-stripe-js";
 import "../css/getInfos.css";
+import AdministrationAPIs from "../GetSetData/useAPIs/AdministrationAPIs";
 
 import { loadStripe } from "@stripe/stripe-js";
 const promise = loadStripe(
@@ -28,7 +29,10 @@ export class DriverInfos extends Component {
 
   state = {
     driver: true,
+    DisdriverList: null,
+    style: null,
   };
+
   displayDriverInput = () => {
     this.state.driver
       ? this.setState({
@@ -38,6 +42,19 @@ export class DriverInfos extends Component {
           driver: true,
         });
   };
+  displayDriverList = async () => {
+    await AdministrationAPIs.DriverList().then((data) =>
+      this.setState({ DisdriverList: data })
+    );
+  };
+  setStyle = (exist) => {
+    exist &&
+      this.setState({ style: { border: "2px solid var(--rented_color)" } });
+    !exist && this.setState({ style: null });
+  };
+  componentDidMount() {
+    this.displayDriverList();
+  }
   render() {
     return (
       <div className="container">
@@ -47,19 +64,42 @@ export class DriverInfos extends Component {
           noValidate
         >
           <div className="m-2 w-100">
-            <label htmlFor="id">Driver ID</label>
+            <label htmlFor="id">Driver UserName</label>
             {!this.enterprise ? (
               <>
                 {this.state.driver && (
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="id"
-                    placeholder="Driver ID"
-                    required
-                    value={this.context.driver[0]}
-                    onChange={(d) => this.context.driver[1](d.target.value)}
-                  />
+                  <>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="id"
+                      placeholder="Driver ID"
+                      required
+                      style={this.state.style}
+                      onChange={(d) => {
+                        if (this.state.DisdriverList) {
+                          for (
+                            var i = 0;
+                            i < this.state.DisdriverList.length;
+                            i++
+                          ) {
+                            if (this.state.DisdriverList[i].username === d.target.value) {
+                              this.setStyle(true);
+                              this.context.driver[1](
+                                this.state.DisdriverList[i].user_id
+                              );
+                              if (this.state.DisdriverList[i].id === 7) { //Uid
+                                this.context.driver[1]("");
+                              }
+                              break;
+                            } else {
+                              this.setStyle(false);
+                            }
+                          }
+                        }
+                      }}
+                    />
+                  </>
                 )}
                 <div className="form-check">
                   <input
@@ -150,11 +190,11 @@ export class PaimentInfos extends Component {
                           : this.context.paymentMethod[1]("On Spot");
                         this.payOnSpot();
                       }}
-                      id="flexCheckDefault"
+                      id="flexCheckDefaultPay"
                     />
                     <label
                       className="form-check-label"
-                      htmlFor="flexCheckDefault"
+                      htmlFor="flexCheckDefaultPay"
                     >
                       pay on spot
                     </label>
@@ -264,7 +304,7 @@ export class PaimentInfos extends Component {
                       width: "90px",
                       height: "38px",
                       background: "var(--btn_color3)",
-                      color: "var(--nav_font_color)"
+                      color: "var(--nav_font_color)",
                     }}
                     onClick={() => this.validPromo()}
                   />

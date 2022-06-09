@@ -10,7 +10,10 @@ export default class ReservationAPIs {
       returnDate.getMonth() + 1
     }-${returnDate.getDate()} ${returnDate.getHours()}:${returnDate.getMinutes()}:00`;
     let renter = 7; //Uid;
-    let tools = d.tools[0].split("-").map(Number);
+    let tools;
+    if (d.tools[0] !== "") {
+      tools = d.tools[0].split("-").map(Number);
+    }
     return await fetch(`http://127.0.0.1:8000/reservation/reservationCar/`, {
       method: "POST",
       headers: {
@@ -34,7 +37,6 @@ export default class ReservationAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
-
   static reservationList() {
     return fetch(`http://127.0.0.1:8000/reservation/reservationList/`)
       .then((response) => response.json())
