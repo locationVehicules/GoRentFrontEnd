@@ -343,247 +343,250 @@ export class Catégories extends Component {
     };
     render() {
       return (
-      <section className="container my-5 py-5 border-top">
-        <h3 className="text-center fw-bold mb-3" id="title">
-          Let's find your car categorie
-        </h3>
-        <div className="row">
-          <OwlCarousel
-            className="owl-carousel owl-theme"
-            margin={10}
-            responsive={{
-              0: {
-                items: 1,
-              },
-              550: {
-                items: 2,
-              },
-              600: {
-                items: 3,
-              },
-            }}
-            responsiveClass={true}
-          >
-            <button
-              value="car"
-              className="item card p-4 m-3 border-0"
-              onClick={this.handleChangeType}
+        <section className="container my-5 py-5 border-top">
+          <h3 className="text-center fw-bold mb-3" id="title">
+            Let's find your car categorie
+          </h3>
+          <div className="row">
+            <OwlCarousel
+              className="owl-carousel owl-theme"
+              margin={10}
+              responsive={{
+                0: {
+                  items: 1,
+                },
+                550: {
+                  items: 2,
+                },
+                600: {
+                  items: 3,
+                },
+              }}
+              responsiveClass={true}
             >
-              <div className="img-container" value="car">
-                <img
-                  className=" p-2"
-                  src={require("../img/vehicles/car/1.png")}
-                  alt="accent2016"
-                  value="car"
-                />
-              </div>
-              <h3 className="card-title text-center">Car</h3>
-            </button>
-            <button
-              value="bus"
-              className="item card p-4 m-3 border-0"
-              onClick={this.handleChangeType}
-            >
-              <div className="img-container">
-                <img
-                  className=" p-2"
-                  src={require("../img/vehicles/bus/1.png")}
-                  alt="van"
-                />
-              </div>
-              <h3 className="card-title text-center">Bus</h3>
-            </button>
-            <button
-              className="item card p-4 m-3 border-0"
-              value="moto"
-              onClick={this.handleChangeType}
-            >
-              <div className="img-container">
-                <img
-                  className=" p-2"
-                  src={require("../img/vehicles/moto/4.png")}
-                  alt="moto"
-                />
-              </div>
-              <h3 className="card-title text-center">Moto</h3>
-            </button>
-          </OwlCarousel>
-        </div>
-        <div className="d-flex flex-column flex-md-row justify-content-center p-2 m-sm-3">
-          <form
-            className="container-fluid col-md-3 col-12 border-top p-2 d-flex flex-md-column flex-wrap justify-content-start"
-            id="filter"
-          >
-            <div className="m-2 p-2" style={{ width: "100%" }}>
-              <label htmlFor="type"> Model</label>
-              <Select
-                id="type"
-                isMulti
-                components={makeAnimated()}
-                name="modelOptions"
-                options={this.modelOptions}
-                onChange={this.handleChange}
-                className="basic-multi-select"
-                classNamePrefix="select"
-              />
-            </div>
-            <div className="m-2 p-2" style={{ width: "100%" }}>
-              <label htmlFor="gearbox-type"> Gear box type</label>
-              <Select
-                id="gearbox-type"
-                isMulti
-                components={makeAnimated()}
-                name="gearBox"
-                options={this.gearBox}
-                onChange={this.handleChange}
-                className="basic-multi-select"
-                classNamePrefix="select"
-              />
-            </div>
-            <div className="m-2 p-2" style={{ width: "100%" }}>
-              <label htmlFor="number-seat">Number of seat</label>
-              <Select
-                id="number-seat"
-                isMulti
-                components={makeAnimated()}
-                name="place"
-                options={this.place}
-                onChange={this.handleChange}
-                className="basic-multi-select"
-                classNamePrefix="select"
-              />
-            </div>
-            <div className="m-2 p-2" style={{ width: "100%" }}>
-              <label htmlFor="color">Color</label>
-              <Select
-                id="color"
-                isMulti
-                components={makeAnimated()}
-                name="colors"
-                options={this.colourOptions}
-                onChange={this.handleChange}
-                className="basic-multi-select"
-                classNamePrefix="select"
-              />
-            </div>
-            <div className="m-2 p-2" style={{ width: "100%" }}>
-              <label htmlFor="price">Max Price</label>
-              <Select
-                id="price"
-                isMulti
-                components={makeAnimated()}
-                name="price"
-                options={this.prices}
-                onChange={this.handleChange}
-                className="basic-multi-select"
-                classNamePrefix="select"
-              />
-            </div>
-            <div
-              className="m-2 p-2 d-flex justify-content-center align-items-center "
-              style={{ height: "55px", width: "220px" }}
-            >
-              <input
-                style={{ height: "20px", width: "20px" }}
-                className="mx-2"
-                type="checkbox"
-                id="topping"
-                name="topping"
-                value="Paneer"
-                onChange={this.handleChange}
-              />
-              <label htmlFor="reduced-mobility"> Reduced mobility </label>
-            </div>
-          </form>
-          <div
-            className="col-md-9 col-12 border-top p-2 d-flex flex-wrap justify-content-center"
-            id="filterd"
-          >
-            {this.state.vehicles &&
-              this.state.vehicles.map((v, i) => (
-                <Link
-                  to={`/${this.path}`}
-                  onClick={() => {
-                    this.context.selectedVehicle[1](v);
-                    this.context.selectedParking[1](v.parking);
-                  }}
-                  key={i}
-                  style={{
-                    width: "240px",
-                    borderRadius: "10px",
-                  }}
-                  className="card p-3 m-1 border d-flex flex-column justify-content-between"
-                >
-                  <div
-                    className="img-containe d-flex"
-                    style={{
-                      maxHeight: "55%",
-                      maxWidth: "100%",
-                    }}
-                  >
-                    <img
-                      className=" p-2"
-                      src={`https://cdn.imagin.studio/getImage?customer=img&${v.photo
-                        .replaceAll("%3D", "=")
-                        .replace(
-                          "%26",
-                          "&"
-                        )}&angle=23&width=2600&zoomType=fullscreen`}
-                      alt={`${v.name}_photo`}
-                    />
-                  </div>
-                  <ul
-                    className="info list-unstyled d-flex flex-column"
-                    style={{
-                      maxHeight: "45%",
-                      maxWidth: "100%",
-                    }}
-                  >
-                    <li>
-                      <img
-                        style={{
-                          maxHeight: "40px",
-                          marginRight: "10px",
-                        }}
-                        src="https://img.icons8.com/ios-filled/50/000000/audi.png"
-                        alt="audi"
-                      />
-                      {v.name}
-                    </li>
-                    <li>
-                      <i className="bi bi-slack" style={{ color: "black" }}></i>
-                      <span>{`${v.modele}`} </span>
-                    </li>
-                    <li>
-                      <i
-                        className="bi bi-cash-coin fs-5"
-                        style={{ color: "black" }}
-                      ></i>
-                      <span>{`${v.priceD} for one day`}</span>
-                    </li>
-                    <li>
-                      <i
-                        className="bi bi-cash-coin fs-5"
-                        style={{ color: "black" }}
-                      ></i>
-                      <span>{`${v.priceH} for one hour`}</span>
-                    </li>
-                    <li>
-                      <i
-                        className="bi material-icons fs-5"
-                        style={{ color: "black" }}
-                      >
-                        airline_seat_recline_normal
-                      </i>
-                      <span>{`${v.nb_place} seats`} </span>
-                    </li>
-                  </ul>
-                </Link>
-              ))}
+              <button
+                value="car"
+                className="item card p-4 m-3 border-0"
+                onClick={this.handleChangeType}
+              >
+                <div className="img-container" value="car">
+                  <img
+                    className=" p-2"
+                    src={require("../img/vehicles/car/1.png")}
+                    alt="accent2016"
+                    value="car"
+                  />
+                </div>
+                <h3 className="card-title text-center">Car</h3>
+              </button>
+              <button
+                value="bus"
+                className="item card p-4 m-3 border-0"
+                onClick={this.handleChangeType}
+              >
+                <div className="img-container">
+                  <img
+                    className=" p-2"
+                    src={require("../img/vehicles/bus/1.png")}
+                    alt="van"
+                  />
+                </div>
+                <h3 className="card-title text-center">Bus</h3>
+              </button>
+              <button
+                className="item card p-4 m-3 border-0"
+                value="moto"
+                onClick={this.handleChangeType}
+              >
+                <div className="img-container">
+                  <img
+                    className=" p-2"
+                    src={require("../img/vehicles/moto/4.png")}
+                    alt="moto"
+                  />
+                </div>
+                <h3 className="card-title text-center">Moto</h3>
+              </button>
+            </OwlCarousel>
           </div>
-        </div>
-      </section>
-    );
+          <div className="d-flex flex-column flex-md-row justify-content-center p-2 m-sm-3">
+            <form
+              className="container-fluid col-md-3 col-12 border-top p-2 d-flex flex-md-column flex-wrap justify-content-start"
+              id="filter"
+            >
+              <div className="m-2 p-2" style={{ width: "100%" }}>
+                <label htmlFor="type"> Model</label>
+                <Select
+                  id="type"
+                  isMulti
+                  components={makeAnimated()}
+                  name="modelOptions"
+                  options={this.modelOptions}
+                  onChange={this.handleChange}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                />
+              </div>
+              <div className="m-2 p-2" style={{ width: "100%" }}>
+                <label htmlFor="gearbox-type"> Gear box type</label>
+                <Select
+                  id="gearbox-type"
+                  isMulti
+                  components={makeAnimated()}
+                  name="gearBox"
+                  options={this.gearBox}
+                  onChange={this.handleChange}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                />
+              </div>
+              <div className="m-2 p-2" style={{ width: "100%" }}>
+                <label htmlFor="number-seat">Number of seat</label>
+                <Select
+                  id="number-seat"
+                  isMulti
+                  components={makeAnimated()}
+                  name="place"
+                  options={this.place}
+                  onChange={this.handleChange}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                />
+              </div>
+              <div className="m-2 p-2" style={{ width: "100%" }}>
+                <label htmlFor="color">Color</label>
+                <Select
+                  id="color"
+                  isMulti
+                  components={makeAnimated()}
+                  name="colors"
+                  options={this.colourOptions}
+                  onChange={this.handleChange}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                />
+              </div>
+              <div className="m-2 p-2" style={{ width: "100%" }}>
+                <label htmlFor="price">Max Price</label>
+                <Select
+                  id="price"
+                  isMulti
+                  components={makeAnimated()}
+                  name="price"
+                  options={this.prices}
+                  onChange={this.handleChange}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
+                />
+              </div>
+              <div
+                className="m-2 p-2 d-flex justify-content-center align-items-center "
+                style={{ height: "55px", width: "220px" }}
+              >
+                <input
+                  style={{ height: "20px", width: "20px" }}
+                  className="mx-2"
+                  type="checkbox"
+                  id="topping"
+                  name="topping"
+                  value="Paneer"
+                  onChange={this.handleChange}
+                />
+                <label htmlFor="reduced-mobility"> Reduced mobility </label>
+              </div>
+            </form>
+            <div
+              className="col-md-9 col-12 border-top p-2 d-flex flex-wrap justify-content-center"
+              id="filterd"
+            >
+              {this.state.vehicles &&
+                this.state.vehicles.map((v, i) => (
+                  <Link
+                    to={`/${this.path}`}
+                    onClick={() => {
+                      this.context.selectedVehicle[1](v);
+                      this.context.selectedParking[1](v.parking);
+                    }}
+                    key={i}
+                    style={{
+                      width: "240px",
+                      borderRadius: "10px",
+                    }}
+                    className="card p-3 m-1 border d-flex flex-column justify-content-between"
+                  >
+                    <div
+                      className="img-containe d-flex"
+                      style={{
+                        maxHeight: "55%",
+                        maxWidth: "100%",
+                      }}
+                    >
+                      <img
+                        className=" p-2"
+                        src={`https://cdn.imagin.studio/getImage?customer=img&${v.photo
+                          .replaceAll("%3D", "=")
+                          .replace(
+                            "%26",
+                            "&"
+                          )}&angle=23&width=2600&zoomType=fullscreen`}
+                        alt={`${v.name}_photo`}
+                      />
+                    </div>
+                    <ul
+                      className="info list-unstyled d-flex flex-column"
+                      style={{
+                        maxHeight: "45%",
+                        maxWidth: "100%",
+                      }}
+                    >
+                      <li>
+                        <img
+                          style={{
+                            maxHeight: "40px",
+                            marginRight: "10px",
+                          }}
+                          src="https://img.icons8.com/external-tal-revivo-regular-tal-revivo/24/undefined/external-toyota-motor-corporation-is-a-japanese-multinational-automotive-manufacturer-automotive-regular-tal-revivo.png"
+                        alt="audi"
+                        />
+                        {v.name}
+                      </li>
+                      <li>
+                        <i
+                          className="bi bi-slack"
+                          style={{ color: "black" }}
+                        ></i>
+                        <span>{`${v.modele}`} </span>
+                      </li>
+                      <li>
+                        <i
+                          className="bi bi-cash-coin fs-5"
+                          style={{ color: "black" }}
+                        ></i>
+                        <span>{`${v.priceD} for one day`}</span>
+                      </li>
+                      <li>
+                        <i
+                          className="bi bi-cash-coin fs-5"
+                          style={{ color: "black" }}
+                        ></i>
+                        <span>{`${v.priceH} for one hour`}</span>
+                      </li>
+                      <li>
+                        <i
+                          className="bi material-icons fs-5"
+                          style={{ color: "black" }}
+                        >
+                          airline_seat_recline_normal
+                        </i>
+                        <span>{`${v.nb_place} seats`} </span>
+                      </li>
+                    </ul>
+                  </Link>
+                ))}
+            </div>
+          </div>
+        </section>
+      );
   }
 }
 Catégories.contextType = Reservation;

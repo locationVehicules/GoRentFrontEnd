@@ -90,13 +90,8 @@ export class VehicleCard extends Component {
                 <div className="d-flex align-items-center marque m-2 p-1">
                   <img
                     className="w-md-25 w-50"
-                    // src={`https://cdn.imagin.studio/getImage?customer=img&${this.context.selectedVehicle[0].photo
-                    //   .replaceAll("%3D", "=")
-                    //   .replace(
-                    //     "%26",
-                    //     "&"
-                    //   )}&angle=23&width=2600&zoomType=fullscreen`}
-                    src="https://img.icons8.com/ios-filled/50/000000/audi.png"
+                    src="https://img.icons8.com/external-tal-revivo-regular-tal-revivo/24/undefined/external-toyota-motor-corporation-is-a-japanese-multinational-automotive-manufacturer-automotive-regular-tal-revivo.png"
+            
                     alt={`${this.context.selectedVehicle[0].name}_photo`}
                   />
                   <h2 className=" px-3 py-2">
@@ -143,7 +138,9 @@ export class VehicleCard extends Component {
                 <div className="paiement py-2">
                   <h5 className="p-2">
                     <span>{`Price for ${this.context.nbDays[0]} days`}</span>
-                    {this.context.nbHours[0] !== 0 && (<span>{` and ${this.context.nbHours[0]} hours`}</span>)}
+                    {this.context.nbHours[0] !== 0 && (
+                      <span>{` and ${this.context.nbHours[0]} hours`}</span>
+                    )}
                     <br />
                     <strong>
                       {this.context.nbDays[0] *

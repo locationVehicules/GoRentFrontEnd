@@ -18,21 +18,22 @@ export const ReplayForm = ({
       currentDate.setHours(currentDate.getHours() + 1);
       currentDate = currentDate.toISOString().slice(0, 10);
 
+      console.log(selectedItem);
       let data = selectedItem.motif
         ? {
             motif: selectedItem.motif,
             response: replay,
             post_date: selectedItem.post_date,
             response_date: currentDate,
-            admin: selectedItem.admin,
-            Owner: 15,
+            renter: selectedItem.renter,
+            Owner: JSON.parse(localStorage.getItem("owner")),
           }
         : {
             question: selectedItem.question,
             response: replay,
             post_date: selectedItem.post_date,
             response_date: currentDate,
-            admin: 15,
+            admin: JSON.parse(localStorage.getItem("admin")),
             Renter: selectedItem.Renter,
           };
       submitReplay(selectedItem.id, data);

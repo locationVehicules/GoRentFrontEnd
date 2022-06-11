@@ -6,6 +6,9 @@ import { MySignaturePad } from "./MyContract";
 import { Reservation } from "../GetSetData/Contexts";
 import AdministrationAPIs from "../GetSetData/useAPIs/AdministrationAPIs";
 import ReservationAPIs from "../GetSetData/useAPIs/ReservationAPIs";
+import ContartAPIs from "../GetSetData/useAPIs/ContartAPIs";
+import PaymentAPIs from "../GetSetData/useAPIs/paymentAPIs";
+import BillAPIs from "../GetSetData/useAPIs/BillAPIs";
 
 export const Payment = ({ user }) => {
   const context = useContext(Reservation);
@@ -67,30 +70,43 @@ export const Payment = ({ user }) => {
 
 export const Confirmation = ({ user, text }) => {
   const context = useContext(Reservation);
-  const [onSpot, setOnSpot] = useState(false);
+  const [onSpot, setOnSpot] = useState(null);
   const [agency, setAgency] = useState(false);
   const [driverS, setDriverS] = useState(null);
   const [reservation, setReservation] = useState(null);
   const [driver, setDriver] = useState(null);
 
+  const [contract, setContract] = useState(null);
+  const [payment, setPayment] = useState(null);
+  const [bill, setBill] = useState(null);
+
   useEffect(() => {
-    if (text === "Pay location to cuntune reservation") {
-      getDriverID(7); // get id from context
-      setOnSpot(true);
-      console.log(agency);
-    }
-    if (text === "Your reservation passed successfully!") {
-      !context.signatureD[0] &&
-        setDriverS("Wait driver signature to get a validated contract");
-      setOnSpot(false);
-    }
+    context.paymentMethod[0] === "On Spot" ? setOnSpot(true) : setOnSpot(false);
+    getDriverID(context.driver[0]);
   }, []);
+
   useEffect(() => {
     driver && reserve();
   }, [driver]);
+
   useEffect(() => {
-    reservation && getAgency();
+    if (reservation) {
+      getContract();
+    }
   }, [reservation]);
+  useEffect(() => {
+    if (contract) {
+      payInfo();
+    }
+  }, [contract]);
+  useEffect(() => {
+    if (payment) {
+      getBill();
+    }
+  }, [payment]);
+  useEffect(() => {
+    bill && getAgency();
+  }, [bill]);
 
   const getAgency = async () => {
     await AdministrationAPIs.AgencyDetail(context.rentLocation[0]).then(
@@ -101,6 +117,29 @@ export const Confirmation = ({ user, text }) => {
     await ReservationAPIs.reservationCarOnLigne(context, driver).then((data) =>
       setReservation(data.id)
     );
+  };
+  const getContract = async () => {
+    let data = {
+      reservation: reservation,
+      type: "new",
+    };
+    await ContartAPIs.AddContrat(data).then((data) => setContract(data));
+  };
+  const payInfo = async () => {
+    return await PaymentAPIs.PayInfo({
+      method_paiment: context.paymentMethod[0],
+      Amount: context.total[0],
+      nbHour: context.nbHours[0],
+      nbDay: context.nbDays[0],
+    }).then((data) => setPayment(data));
+  };
+  const getBill = async () => {
+    let data = {
+      Contrat: contract.id,
+      promotion: context.promotion[0],
+      payment: payment.id,
+    };
+    return await BillAPIs.AddBill(data).then((data) => setBill(data));
   };
   const getDriverID = async (userId) => {
     await AdministrationAPIs.DriverDetail(userId).then((data) =>

@@ -14,21 +14,23 @@ export const QuestionsManagement = () => {
   const getQuestionList = async () => {
     await QuestionAPIs.QuestionList().then((data) => {
       setquestions(data);
+      setDisplayTable(true);
     });
-    questions && setDisplayTable(true);
   };
 
   const submitReplay = async (id, data) => {
     await QuestionAPIs.QuestionUpdate(id, data);
     setDisplayTable(false);
   };
-
+  useEffect(() => {
+     getQuestionList();
+  }, []);
   useEffect(() => {
     getQuestionList();
-    if (displayTable) {
-      questions.map((q) => questionsList.push([q.id, q.question, q.response]));
-    }
-  }, [questions]);
+    (displayTable) &&
+      questions.map((q) => 
+        questionsList.push([q.id, q.question, q.response])); 
+  }, [displayTable]);
 
   const replay = (QuesId) => {
     questions.map((q) => q.id == QuesId && setSelectedquestions(q));

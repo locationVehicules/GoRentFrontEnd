@@ -11,6 +11,10 @@ export const GarageManagerApp = () => {
     sideBar === null ? setNavigate(true) : setNavigate(false);
   }, [sideBar]);
 
+   useEffect(() => {
+     localStorage.setItem("garage_manager", JSON.stringify(1));
+   }, []);
+  
   return (
     <>
       <SideNavBar userType="garage_manager" userApp="GarageManager" />

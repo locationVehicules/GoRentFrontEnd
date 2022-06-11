@@ -53,7 +53,7 @@ export const ContactAdministrator = () => {
     let data = {
       question: replay,
       post_date: currentDate,
-      Renter: 1,
+      Renter: JSON.parse(localStorage.getItem("myId")),
     };
     await QuestionAPIs.postQuestion(data);
     setReplay("");
@@ -70,7 +70,7 @@ export const ContactAdministrator = () => {
       response: null,
       post_date: currentDate,
       response_date: null,
-      admin: 1,
+      renter: JSON.parse(localStorage.getItem("myId")),
       Owner: null,
     };
     await ReclamationAPIs.reclamationCreate(data);

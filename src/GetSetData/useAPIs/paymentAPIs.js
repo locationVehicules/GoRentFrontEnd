@@ -25,4 +25,17 @@ export default class paymentAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
+
+  static updatePayInfo(id,data) {
+    return fetch(`http://127.0.0.1:8000/payment/UpdatePayment/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((res) => res.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
 }

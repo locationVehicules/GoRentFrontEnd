@@ -13,8 +13,8 @@ export const ReclamationManagement = () => {
   const getReclamationList = async () => {
     await ReclamationAPIs.reclamationList().then((data) => {
       setReclamation(data);
+      setDisplayTable(true);
     });
-    reclamation && setDisplayTable(true);
   };
 
   const submitReplay = async (id, data) => {
@@ -23,12 +23,16 @@ export const ReclamationManagement = () => {
   };
   useEffect(() => {
     getReclamationList();
+  }, []);
+
+  useEffect(() => {
+    getReclamationList();
     if (displayTable) {
       reclamation.map((r) =>
-        reclamationList.push([r.id, r.admin, r.motif, r.response])
+        reclamationList.push([r.id, r.renter, r.motif, r.response])
       );
     }
-  }, [reclamation]);
+  }, [displayTable]);
 
   const replay = (RecId) => {
     reclamation.map((r) => r.id == RecId && setSelectedReclamation(r));
@@ -40,14 +44,16 @@ export const ReclamationManagement = () => {
         {displayTable ? (
           <AdministrationTable
             tableTitle={"Reclamation"}
-            headerList={["Reclamation ID", "User ID","Reclamation"]}
+            headerList={["Reclamation ID", "User ID", "Reclamation"]}
             bodyLines={reclamationList}
             btnValue={"Replay"}
             functionBtn={replay}
           />
         ) : (
           <div className="container p-3 my-3 table-con">
-            <h2 className="d-flex justify-content-center">There is no reclamation </h2>
+            <h2 className="d-flex justify-content-center">
+              There is no reclamation{" "}
+            </h2>
           </div>
         )}
         {display && (

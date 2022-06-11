@@ -10,6 +10,10 @@ export const AdminApp = () => {
     sideBar === null ? setNavigate(true) : setNavigate(false);
   }, [sideBar]);
 
+  useEffect(() => {
+    localStorage.setItem("admin", JSON.stringify(1));
+  }, []);
+
   return (
     <>
       <SideNavBar userType="admin" userApp="Admin" />

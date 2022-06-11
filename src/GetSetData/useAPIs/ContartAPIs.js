@@ -26,8 +26,14 @@ export default class ContartAPIs {
       .catch((err) => console.log(err));
   }
 
-  static ContratUpdate(id) {
-    return fetch(`http://127.0.0.1:8000/Contrat/ContratUpdate/${id}`)
+  static ContratUpdate(id , signatureData) {
+    return fetch(`http://127.0.0.1:8000/Contrat/ContratUpdate/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(signatureData),
+    })
       .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));

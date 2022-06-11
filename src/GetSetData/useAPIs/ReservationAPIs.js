@@ -9,7 +9,7 @@ export default class ReservationAPIs {
     returnDate = `${returnDate.getFullYear()}-${
       returnDate.getMonth() + 1
     }-${returnDate.getDate()} ${returnDate.getHours()}:${returnDate.getMinutes()}:00`;
-    let renter = 7; //Uid;
+    let renter = JSON.parse(localStorage.getItem("myId"));
     let tools;
     if (d.tools[0] !== "") {
       tools = d.tools[0].split("-").map(Number);
@@ -43,6 +43,12 @@ export default class ReservationAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
+  static userReservationList(id) {
+    return fetch(`http://127.0.0.1:8000/reservation/userReservationList/${id}`)
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
   static reservationDetail(id) {
     return fetch(`http://127.0.0.1:8000/reservation/reservationDetail/${id}`)
       .then((response) => response.json())
@@ -60,6 +66,19 @@ export default class ReservationAPIs {
   }
   static rcancelreservation(id) {
     return fetch(`http://127.0.0.1:8000/reservation/cancelreservation/${id}`)
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
+  static ReservationUpdate(id, signatureData) {
+    return fetch(`http://127.0.0.1:8000/reservation/ReservationUpdate/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(signatureData),
+    })
       .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));

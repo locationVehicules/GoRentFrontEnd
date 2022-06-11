@@ -12,6 +12,9 @@ export const OwnerApp = () => {
     sideBar === null ? setNavigate(true) : setNavigate(false);
   }, [sideBar]);
 
+   useEffect(() => {
+     localStorage.setItem("owner", JSON.stringify(1));
+   }, []);
   return (
     <>
       <SideNavBar userType="owner" userApp="Owner" />

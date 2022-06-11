@@ -96,6 +96,12 @@ export default class AdministrationAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
+  static EnterpriseDriverList(id) {
+    return fetch(`http://127.0.0.1:8000/staff/enterpriseDriverList/${id}`)
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
 
   static DriverDetail(id) {
     return fetch(`http://127.0.0.1:8000/staff/DriverDetail/${id}`)
@@ -125,8 +131,14 @@ export default class AdministrationAPIs {
       .catch((err) => console.log(err));
   }
 
-  static viewAllDriverDispo() {
-    return fetch(`http://127.0.0.1:8000/staff/DriverDispo/`)
+  static viewAllDriverDispo(rentDate, returnDate) {
+    return fetch(`http://127.0.0.1:8000/staff/DriverDispo/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ issue_date: rentDate, return_date: returnDate }),
+    })
       .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));

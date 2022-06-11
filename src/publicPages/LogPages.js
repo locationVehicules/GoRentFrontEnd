@@ -86,25 +86,6 @@ export class Login extends Component {
                 <span className="mx-sm-2 mx-1">Log in with Google</span>
               </button>
             </div>
-            <div className="col-lg-5 mx-sm-2 my-3">
-              <button
-                style={{
-                  height: "40px",
-                  border: "1px solid #eaeaea",
-                  borderRadius: "10px",
-                  background: "White",
-                }}
-                className="d-flex w-100 p-1 justify-content-center align-items-center"
-              >
-                <i
-                  className="bi bi-facebook fs-3"
-                  style={{
-                    color: "#3b5998",
-                  }}
-                ></i>
-                <span className="mx-sm-2 mx-1">Log in with Facebook</span>
-              </button>
-            </div>
           </div>
 
           <p
@@ -121,7 +102,7 @@ export class Login extends Component {
                 className="fs-5"
                 style={{ color: "var(--font-color-2)" }}
               >
-                User Name or Phone Number
+                User Name
               </label>
               <input
                 type="text"

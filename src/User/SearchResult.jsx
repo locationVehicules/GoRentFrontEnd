@@ -7,20 +7,6 @@ import {
 } from "../publicPages/SearchResultPage";
 
 export const SearchResult = ({ user }) => {
-  const vehicles = [
-    {
-      path: "car/",
-    },
-    {
-      path: "bus/",
-    },
-    {
-      path: "moto/",
-    },
-    {
-      path: "van/",
-    },
-  ];
   window.scrollTo({
     top: 0,
     behavior: "smooth",
@@ -30,7 +16,6 @@ export const SearchResult = ({ user }) => {
       <ScrollTop />
       <DisplatDatesPlaces />
       <Catégories
-        vehicles={vehicles}
         path={`${user}/${user}/Rent/SelectedVehicle`}
       />
     </Main>

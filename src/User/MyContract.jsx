@@ -53,7 +53,7 @@ export const MyContract = ({ user }) => {
     window.open(`http://127.0.0.1:8000${billPath}`, "_blank").focus();
   };
   return (
-    <Main title={"Rentals Management"}>
+    <Main title={"Contract and Bill"}>
       <div className="container">
         <div className="d-flex d-flex align-items-center">
           <Link to={`/${user}/${user}/Rentals`}>
@@ -244,7 +244,7 @@ export const MySignaturePad = ({ AddSign }) => {
   const [bill, setBill] = useState(null);
 
   const submit = () => {
-    if (context.driver[0] !== "") {
+    if (context.driver[0] !== JSON.parse(localStorage.getItem("myId"))) {
       context.signatureR[1](sigPad.current.toDataURL("image/png"));
       context.stateR[1]("driver not yet signed");
       getDriverID(context.driver[0]);
@@ -252,7 +252,7 @@ export const MySignaturePad = ({ AddSign }) => {
       context.signatureR[1](sigPad.current.toDataURL("image/png"));
       context.signatureD[1](sigPad.current.toDataURL("image/png"));
       context.stateR[1]("completed");
-      getDriverID(7); //Uid;
+      getDriverID(context.driver[0]);
     }
   };
 
@@ -308,7 +308,6 @@ export const MySignaturePad = ({ AddSign }) => {
         type: "new",
       };
     }
-    console.log(data);
     await ContartAPIs.AddContrat(data).then((data) => setContract(data));
   };
   const pay = async () => {
