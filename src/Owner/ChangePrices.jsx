@@ -200,8 +200,8 @@ const ChangePriceForm = ({ displayChangePriceForm, selectedVehicle }) => {
   const [priceD, setPriceD] = useState(selectedVehicle.priceD);
   const [priceH, setPriceH] = useState(selectedVehicle.priceH);
 
-  const saveData = () => {
-    CarsAPIs.UpdateCarPriceate(
+  const saveData = async() => {
+    await CarsAPIs.UpdateCarPriceate(
       selectedVehicle.id,
       parseInt(priceD),
       parseInt(priceH)

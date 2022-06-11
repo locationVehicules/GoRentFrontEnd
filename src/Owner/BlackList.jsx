@@ -1,30 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Main } from "../components/Main";
 import { AddRemoveTable } from "../components/tables";
+import AdministrationAPIs from "../GetSetData/useAPIs/AdministrationAPIs";
 
 export const BlackList = () => {
-  const renters = [];
-  const renter = [
-    "SB19042019",
-    "BENABDESSADOK Safa",
-    "21-04-2022",
-    " make a lot of ifraction",
-  ];
-  for (let i = 0; i < 30; i++) {
-    renters.push(renter);
-  }
+  const [BlackList, setBlackList] = useState(null);
+  const [user, setUser] = useState("");
+  const [renters, setRenters] = useState([]);
+  const [displayTable, setDisplayTable] = useState(false);
+
   const [display, setDisplay] = useState(false);
-  const [userID, setUserID] = useState();
+  const [userID, setUserID] = useState(null);
+
+  const reRender = (e) => {
+    let value = e.target.value;
+    setDisplayTable(false);
+    setUser(value);
+    let allBlackList = renters;
+    value !== ""
+      ? setBlackList(
+          allBlackList.filter((renter) => renter[1] === parseInt(value))
+        )
+      : setBlackList(allBlackList);
+  };
+
+  useEffect(() => {
+    BlackList && setDisplayTable(true);
+  }, [BlackList]);
+
+  useEffect(() => {
+    getBalckList();
+  }, []);
+
+  const getBalckList = async () => {
+    let r = [];
+    await AdministrationAPIs.BlackList().then(
+      (data) =>
+        data && data.map((d) => r.push([d.id, d.account, d.add_date, d.motif]))
+    );
+    setRenters(r);
+    r.length !== 0 && setBlackList(r);
+    r.length !== 0 && setDisplayTable(true);
+  };
 
   const displayConfirmation = () => {
     display ? setDisplay(false) : setDisplay(true);
   };
   const unblock = (e) => {
     displayConfirmation();
-    !userID && setUserID(e);
+    setUserID(e);
   };
+
   const yesFunction = async () => {
-    console.log(`${userID} unblocked`);
+    setDisplayTable(false);
+    await AdministrationAPIs.blackListDelete(parseInt(userID));
+    setUser("");
+    getBalckList();
   };
   return (
     <Main title={"Black List"}>
@@ -34,20 +65,28 @@ export const BlackList = () => {
             <form className="d-flex">
               <i className="bi bi-search fs-5"></i>
               <input
+                value={user}
+                onChange={reRender}
                 className="form-control form-control-sm ml-3 fs-6"
                 type="text"
-                placeholder="Search renter"
+                placeholder="Search driver"
                 aria-label="Search"
               />
             </form>
           </div>
         </div>
-        <AddRemoveTable
-          headerList={["Renter ID", "Full Name", "Date", "Justification"]}
-          bodyLines={renters}
-          btnValue={"Unblock"}
-          functionBtn={unblock}
-        />
+        {displayTable ? (
+          <AddRemoveTable
+            headerList={["Number", "Driver ID", "Date", "Raison"]}
+            bodyLines={BlackList}
+            btnValue={"Unblock"}
+            functionBtn={unblock}
+          />
+        ) : (
+          <div className="container p-3 my-3 table-con">
+            <h2 className="d-flex justify-content-center">No one Blocked</h2>
+          </div>
+        )}
         {display && (
           <Confirmation
             displayConfirmation={displayConfirmation}
@@ -103,7 +142,7 @@ export const Confirmation = ({
               type="button"
               className="btn accept-btn"
               data-dismiss="modal"
-              onClick={()=>yes()}
+              onClick={() => yes()}
               style={{ color: "black" }}
             >
               Yes

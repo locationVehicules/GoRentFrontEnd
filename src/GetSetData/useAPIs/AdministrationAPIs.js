@@ -63,7 +63,12 @@ export default class AdministrationAPIs {
   }
 
   static blackListDelete(id) {
-    return fetch(`http://127.0.0.1:8000/staff/deleteBlackList/${id}`)
+    return fetch(`http://127.0.0.1:8000/staff/deleteBlackList/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));
@@ -138,6 +143,26 @@ export default class AdministrationAPIs {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ issue_date: rentDate, return_date: returnDate }),
+    })
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
+  static SalariesList() {
+    return fetch(`http://127.0.0.1:8000/staff/SalariesList/`)
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
+  static UpdateSalaries(id, data) {
+    return fetch(`http://127.0.0.1:8000/staff/SalariesUpdate/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     })
       .then((response) => response.json())
       .then((data) => data)

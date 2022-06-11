@@ -275,7 +275,7 @@ textarea {
   max-width: 200px !important;
   max-height: 200px !important;
 }
-
+ 
 .signature-container canvas {
   width: 100%;
   border: 3px solid var(--bg_icon_color);
