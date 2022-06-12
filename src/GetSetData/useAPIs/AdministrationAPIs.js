@@ -34,20 +34,6 @@ export default class AdministrationAPIs {
       .catch((err) => console.log(err));
   }
 
-  static BlackList() {
-    return fetch(`http://127.0.0.1:8000/staff/BlackList/`)
-      .then((response) => response.json())
-      .then((data) => data)
-      .catch((err) => console.log(err));
-  }
-
-  static BlackListDetail(id) {
-    return fetch(`http://127.0.0.1:8000/staff/BlackListDetail/${id}`)
-      .then((response) => response.json())
-      .then((data) => data)
-      .catch((err) => console.log(err));
-  }
-
   static AddBlackList() {
     return fetch(`http://127.0.0.1:8000/staff/addBlackList/`)
       .then((response) => response.json())
@@ -62,13 +48,8 @@ export default class AdministrationAPIs {
       .catch((err) => console.log(err));
   }
 
-  static blackListDelete(id) {
-    return fetch(`http://127.0.0.1:8000/staff/deleteBlackList/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+  static BlackListDetail(id) {
+    return fetch(`http://127.0.0.1:8000/staff/BlackListDetail/${id}`)
       .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));
@@ -108,13 +89,6 @@ export default class AdministrationAPIs {
       .catch((err) => console.log(err));
   }
 
-  static DriverDetail(id) {
-    return fetch(`http://127.0.0.1:8000/staff/DriverDetail/${id}`)
-      .then((response) => response.json())
-      .then((data) => data)
-      .catch((err) => console.log(err));
-  }
-
   static AddRenter() {
     return fetch(`http://127.0.0.1:8000/staff/addRenter/`)
       .then((response) => response.json())
@@ -131,6 +105,26 @@ export default class AdministrationAPIs {
 
   static deleteRenter(id) {
     return fetch(`http://127.0.0.1:8000/staff/deleteRenter/${id}`)
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
+  // Used
+  static BlackList() {
+    return fetch(`http://127.0.0.1:8000/staff/BlackList/`)
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
+  static blackListDelete(id) {
+    return fetch(`http://127.0.0.1:8000/staff/deleteBlackList/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));
@@ -164,6 +158,20 @@ export default class AdministrationAPIs {
       },
       body: JSON.stringify(data),
     })
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
+  static DriverDetail(id) {
+    return fetch(`http://127.0.0.1:8000/staff/DriverDetail/${id}`)
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
+  static GaragistDetail(id) {
+    return fetch(`http://127.0.0.1:8000/staff/GaragistDetail/${id}`)
       .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));

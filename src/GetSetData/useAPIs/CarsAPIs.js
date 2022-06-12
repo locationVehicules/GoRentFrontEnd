@@ -17,6 +17,64 @@ export default class CarsAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
+
+  // Used
+  static AddCar(data) {
+    return fetch(`http://127.0.0.1:8000/cars/AddCar/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response)
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
+  static AddTool(data) {
+    return fetch(`http://127.0.0.1:8000/cars/AddTool/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response)
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
+  static DeleteCar(id) {
+    return fetch(`http://127.0.0.1:8000/cars/DeleteCar/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        etat: "not available",
+      }),
+    })
+      .then((response) => response)
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
+  static DeleteTool(id) {
+    return fetch(`http://127.0.0.1:8000/cars/DeleteTool/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        etat: "not available",
+      }),
+    })
+      .then((response) => response)
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
   static ViewCarsDispo(rentDate, returnDate) {
     return fetch("http://127.0.0.1:8000/cars/ViewCarsDispo/", {
       method: "POST",
@@ -29,6 +87,7 @@ export default class CarsAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
+
   static ViewToolDispo(rentDate, returnDate) {
     return fetch("http://127.0.0.1:8000/cars/ViewToolDispo/", {
       method: "POST",
@@ -41,6 +100,7 @@ export default class CarsAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
+
   static UpdateCarPriceate(id, priceDay, priceHour) {
     return fetch(`http://127.0.0.1:8000/cars/UpdateCarPrice/${id}`, {
       method: "PUT",
@@ -53,8 +113,8 @@ export default class CarsAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
+
   static UpdateToolPriceate(id, priceNew) {
-    
     return fetch(`http://127.0.0.1:8000/cars/UpdateToolPrice/${id}`, {
       method: "PUT",
       headers: {
@@ -66,6 +126,7 @@ export default class CarsAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
+
   static UpdateCarParking(id, parkingID, spot_letter, spot_number) {
     return fetch(`http://127.0.0.1:8000/cars/UpdateCarParking/${id}`, {
       method: "PUT",
@@ -82,6 +143,7 @@ export default class CarsAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
+
   static UpdateToolParking(id, parkingID) {
     return fetch(`http://127.0.0.1:8000/cars/UpdateToolParking/${id}`, {
       method: "PUT",
@@ -112,57 +174,31 @@ export default class CarsAPIs {
       .catch((err) => console.log(err));
   }
 
-  static DeleteCar(id) {
-    return fetch(`http://127.0.0.1:8000/cars/DeleteCar/${id}`, {
+  static UpdatetoolState(id, state) {
+    return fetch(`http://127.0.0.1:8000/cars/UpdatetoolState/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        etat: "not available",
+        etat: state,
       }),
     })
-      .then((response) => response)
-      .then((data) => data)
-      .catch((err) => console.log(err));
-  }
-  static DeleteTool(id) {
-    return fetch(`http://127.0.0.1:8000/cars/DeleteTool/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        etat: "not available",
-      }),
-    })
-      .then((response) => response)
+      .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));
   }
 
-  static AddCar(data) {
-    return fetch(`http://127.0.0.1:8000/cars/AddCar/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response)
+  static IdCarDetail(id) {
+    return fetch(`http://127.0.0.1:8000/cars/idCarDetail/${id}`)
+      .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));
   }
 
-  static AddTool(data) {
-    return fetch(`http://127.0.0.1:8000/cars/AddTool/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response)
+  static toolDetail(id) {
+    return fetch(`http://127.0.0.1:8000/cars/toolDetail/${id}`)
+      .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));
   }

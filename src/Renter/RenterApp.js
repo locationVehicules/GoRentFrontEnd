@@ -11,8 +11,8 @@ export const RenterApp = () => {
   }, [sideBar]);
   useEffect(() => {
     localStorage.setItem("ndtype", JSON.stringify("garage_manager"));
-    localStorage.setItem("myId", JSON.stringify(3));
-    localStorage.setItem("driver", JSON.stringify(1));
+    localStorage.setItem("myId", JSON.stringify(4));
+    localStorage.setItem("driver", JSON.stringify(0));
     localStorage.setItem("business", JSON.stringify(0));
   }, []);
 

@@ -5,14 +5,14 @@ export default class ContartAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
-
-  static ContratDetail(id) {
-    return fetch(`http://127.0.0.1:8000/Contrat/ContratDetail/${id}`)
+  static deleteContrat(id) {
+    return fetch(`http://127.0.0.1:8000/Contrat/deleteContrat/${id}`)
       .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));
   }
 
+  // Used
   static AddContrat(data) {
     return fetch(`http://127.0.0.1:8000/Contrat/AddContrat/`, {
       method: "POST",
@@ -26,7 +26,7 @@ export default class ContartAPIs {
       .catch((err) => console.log(err));
   }
 
-  static ContratUpdate(id , signatureData) {
+  static ContratUpdate(id, signatureData) {
     return fetch(`http://127.0.0.1:8000/Contrat/ContratUpdate/${id}`, {
       method: "PUT",
       headers: {
@@ -39,8 +39,8 @@ export default class ContartAPIs {
       .catch((err) => console.log(err));
   }
 
-  static deleteContrat(id) {
-    return fetch(`http://127.0.0.1:8000/Contrat/deleteContrat/${id}`)
+  static ContratDetail(id) {
+    return fetch(`http://127.0.0.1:8000/Contrat/ContratDetail/${id}`)
       .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));

@@ -1,4 +1,20 @@
 export default class ReservationAPIs {
+  static ExtendReservationDate(id) {
+    return fetch(
+      `http://127.0.0.1:8000/reservation/ExtendReservationDate/${id}`
+    )
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+  static rcancelreservation(id) {
+    return fetch(`http://127.0.0.1:8000/reservation/cancelreservation/${id}`)
+      .then((response) => response.json())
+      .then((data) => data)
+      .catch((err) => console.log(err));
+  }
+
+  // Used
   static async reservationCarOnLigne(data, driver) {
     let d = data;
     let rentDate = new Date(d.rentDate[0]);
@@ -37,35 +53,23 @@ export default class ReservationAPIs {
       .then((data) => data)
       .catch((err) => console.log(err));
   }
+
   static reservationList() {
     return fetch(`http://127.0.0.1:8000/reservation/reservationList/`)
       .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));
   }
+
   static userReservationList(id) {
     return fetch(`http://127.0.0.1:8000/reservation/userReservationList/${id}`)
       .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));
   }
+
   static reservationDetail(id) {
     return fetch(`http://127.0.0.1:8000/reservation/reservationDetail/${id}`)
-      .then((response) => response.json())
-      .then((data) => data)
-      .catch((err) => console.log(err));
-  }
-
-  static ExtendReservationDate(id) {
-    return fetch(
-      `http://127.0.0.1:8000/reservation/ExtendReservationDate/${id}`
-    )
-      .then((response) => response.json())
-      .then((data) => data)
-      .catch((err) => console.log(err));
-  }
-  static rcancelreservation(id) {
-    return fetch(`http://127.0.0.1:8000/reservation/cancelreservation/${id}`)
       .then((response) => response.json())
       .then((data) => data)
       .catch((err) => console.log(err));
